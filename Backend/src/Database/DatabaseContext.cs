@@ -32,5 +32,4 @@ public class DatabaseContext : DbContext
 
     public DbSet<Subject> Subject { get; set; }
     public DbSet<Degree> Degree { get; set; }
-    public DbSet<ProgressInfo> Progress { get; set; }
 }

@@ -30,7 +30,7 @@ public class OpenWebsite : IDisposable
 
 
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            Thread.Sleep(1500);
+            Thread.Sleep(2000);
             
 
             var emailField = wait.Until(d => d.FindElement(By.Id("i0116")));
@@ -39,7 +39,7 @@ public class OpenWebsite : IDisposable
             var nextButton = _driver.FindElement(By.Id("idSIButton9"));
             nextButton.Click();
 
-            Thread.Sleep(1500);
+            Thread.Sleep(2000);
 
             var passwordField = wait.Until(d => d.FindElement(By.Id("i0118"))); 
             passwordField.SendKeys(_envConfig.Get("STUDENT_PASSWORD"));
@@ -47,7 +47,7 @@ public class OpenWebsite : IDisposable
             var loginButton = _driver.FindElement(By.Id("idSIButton9"));
             loginButton.Click();
 
-            Thread.Sleep(1500);
+            Thread.Sleep(3000);
 
             foreach (var handle in _driver.WindowHandles)
             {
@@ -86,7 +86,7 @@ public class OpenWebsite : IDisposable
 
         _driver.Navigate().Refresh();
 
-        Thread.Sleep(2000);
+        Thread.Sleep(300);
 
         WebDriverWait waitForExpandButtons = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
         var expandButtons = waitForExpandButtons.Until(d => d.FindElements(By.XPath("//i[contains(@class, 'material-icons') and text()='expand_more']")));

@@ -19,7 +19,8 @@ public class Configuration
 
             string connectionString = $@"Data source={dbPath}";
 
-            options.UseSqlite(connectionString);
+            options.UseSqlite(connectionString)
+                .EnableSensitiveDataLogging();
 
             Console.WriteLine("Connection to database was succesfull");
         });

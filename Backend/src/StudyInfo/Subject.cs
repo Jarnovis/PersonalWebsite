@@ -21,4 +21,6 @@ public class Subject
     public string? Semester { get; set; }
     [Required]
     public string? CourseName { get; set; }
+    [Required]
+    public Degree? Degree { get; set; }
 }

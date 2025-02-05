@@ -10,8 +10,8 @@ using WebApi.Database;
 namespace Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20250203153803_initial")]
-    partial class initial
+    [Migration("20250205125233_Inital")]
+    partial class Inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,44 +40,38 @@ namespace Backend.Migrations
                     b.ToTable("Degree");
                 });
 
-            modelBuilder.Entity("WebApi.StudyInfo.ProgressInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("DegreeId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DegreeId");
-
-                    b.ToTable("Progress");
-                });
-
             modelBuilder.Entity("WebApi.StudyInfo.Subject", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<char>("GradeChar")
+                    b.Property<string>("CourseName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<double>("GradeNumber")
-                        .HasColumnType("REAL");
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Info")
+                    b.Property<int>("DegreeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Semester")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DegreeId");
+
                     b.ToTable("Subject");
                 });
 
-            modelBuilder.Entity("WebApi.StudyInfo.ProgressInfo", b =>
+            modelBuilder.Entity("WebApi.StudyInfo.Subject", b =>
                 {
                     b.HasOne("WebApi.StudyInfo.Degree", "Degree")
                         .WithMany()

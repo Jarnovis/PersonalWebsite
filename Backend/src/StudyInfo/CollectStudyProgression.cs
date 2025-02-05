@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
+using Mysqlx;
 using WebApi.Database;
 
 namespace WebApi.StudyInfo;
@@ -17,17 +18,29 @@ public class CollectStudyInfoProgression
         HtmlDocument document = new HtmlDocument();
         using (OpenWebsite website = new OpenWebsite())
         {
-            bool succesfullLogin = website.SignInMicrosoftAuthenticator("https://hhs.osiris-student.nl");
+            try
+            {
+                bool succesfullLogin = website.SignInMicrosoftAuthenticator("https://hhs.osiris-student.nl");
 
-            if (succesfullLogin)
-            {
-                string html = website.GetInfoFromWebPage("https://hhs.osiris-student.nl/voortgang");
-                document.LoadHtml(html);
-                await CollectProgressInfo(document);
+                if (succesfullLogin)
+                {
+                    string html = website.GetInfoFromWebPage("https://hhs.osiris-student.nl/voortgang");
+                    document.LoadHtml(html);
+                    await CollectProgressInfo(document);
+                }
+                else
+                {
+                    throw new Exception ("No succesfull login");
+                }
             }
-            else
+            catch (InvalidOperationException ex)
             {
-                throw new Exception ("No succesfull login");
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                await LoadProgressionPage();
             }
         }
     }
@@ -70,38 +83,11 @@ public class CollectStudyInfoProgression
         return data;
     }
 
-    private bool IsFirstYear(string grade)
+    private static bool IsFirstYear(string semester)
     {
-        char[] firstYear = new char[] {'s', 'e', 'm', 'e', 's', 't', 'e', 'r', ' ', '_'};
-        int begin = 0;
+        string lower = semester.ToLower();
 
-        for (int place = 1; place < grade.Length; place++)
-        {
-            for (int loop = 0; loop < (place - begin); loop++)
-            {
-                if (loop == 0 && (grade[begin] == 's' || grade[begin] == 'S'))
-                { /* pass */ }
-                else if (loop == firstYear.Length - 1 && (grade[begin + loop] == '1' || grade[begin + loop] == '2'))
-                {
-                    return true;
-                }
-                else if (grade[begin + loop] != firstYear[loop])
-                {
-                    if (loop == 0)
-                    {
-                        begin ++;
-                    }
-                    else
-                    {
-                        begin = begin + loop;
-                    }
-                    
-                    place = begin + 1;
-                    break;
-                }
-            }
-        }
-        return false;
+        return lower.Contains("semester 1") || lower.Contains("semester 2");
     }
 
     private IList<IList<string>> SetDegrees(HashSet<string> degrees)
@@ -183,7 +169,7 @@ public class CollectStudyInfoProgression
                 if (IsFirstYear(data[1]))
                 {
                     foreach (string str in data)
-                    {   
+                    {
                         degreesList[1].Add(str);
                     }
 

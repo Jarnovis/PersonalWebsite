@@ -5,7 +5,7 @@
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Inital : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,28 +31,17 @@ namespace Backend.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Info = table.Column<string>(type: "TEXT", nullable: false),
-                    GradeNumber = table.Column<double>(type: "REAL", nullable: false),
-                    GradeChar = table.Column<char>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Subject", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Progress",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Date = table.Column<string>(type: "TEXT", nullable: false),
+                    Points = table.Column<int>(type: "INTEGER", nullable: false),
+                    Semester = table.Column<string>(type: "TEXT", nullable: false),
+                    CourseName = table.Column<string>(type: "TEXT", nullable: false),
                     DegreeId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Progress", x => x.Id);
+                    table.PrimaryKey("PK_Subject", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Progress_Degree_DegreeId",
+                        name: "FK_Subject_Degree_DegreeId",
                         column: x => x.DegreeId,
                         principalTable: "Degree",
                         principalColumn: "Id",
@@ -60,17 +49,14 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Progress_DegreeId",
-                table: "Progress",
+                name: "IX_Subject_DegreeId",
+                table: "Subject",
                 column: "DegreeId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Progress");
-
             migrationBuilder.DropTable(
                 name: "Subject");
 
