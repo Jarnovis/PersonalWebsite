@@ -8,8 +8,6 @@ namespace WebApi.BackgroundServices;
 public class StudyProgressionBackgroundSerice : BackgroundService
 {
     private readonly IServiceScopeFactory _serviceScopeFactory;
-    private readonly CollectStudyInfoProgression _collectStudyInfoProgression;
-
     public StudyProgressionBackgroundSerice(IServiceScopeFactory serviceScopeFactory)
     {
         _serviceScopeFactory = serviceScopeFactory ?? throw new ArgumentNullException(nameof(serviceScopeFactory));
@@ -26,7 +24,7 @@ public class StudyProgressionBackgroundSerice : BackgroundService
                     var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
                     var collectStudyInfoProgression = new CollectStudyInfoProgression(dbContext);
 
-                    await collectStudyInfoProgression.LoadProgressionPage();
+                    await Task.Run(async () => await collectStudyInfoProgression.LoadProgressionPage());
                 }
 
             }

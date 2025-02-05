@@ -6,13 +6,7 @@ using WebApi.Enviroment;
 
 namespace WebApi.Configure;
 
-public interface IConfiguration
-{
-    public void SetupApp(WebApplicationBuilder builder);
-    public WebApplicationBuilder SetupBuilder(string[] args);
-
-}
-public class Configuration : IConfiguration
+public class Configuration
 {
     private void SetUpDataBaseConnection(WebApplicationBuilder builder)
     {
@@ -58,12 +52,12 @@ public class Configuration : IConfiguration
     private void AddSingletonForBuilder(WebApplicationBuilder builder)
     {
         builder.Services.AddSingleton<EnvConfig>();
-        builder.Services.AddSingleton<IHostedService, StudyProgressionBackgroundSerice>();
+        //builder.Services.AddSingleton<IHostedService, StudyProgressionBackgroundSerice>();
     }
 
     private void AddScopedForBuilder(WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<IConfiguration, Configuration>();
+        builder.Services.AddScoped<Configuration>();
     }
 
     private void AddHostedServiceForBuilder(WebApplicationBuilder builder)
