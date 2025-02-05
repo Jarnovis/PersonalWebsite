@@ -145,26 +145,26 @@ public class CollectStudyInfoProgression
 
     private async Task CollectProgressInfo(HtmlDocument document)
     {
-        HashSet<string> degrees = await GetSelectedNodesHashSetAsync(document, "//label[@class='font-size-xl lh-20']");
-        List<string> courses = await GetSelectedNodesListAsync(document, "//ion-row[@class='sc-ion-label-md md']");
-        List<string> subjects = await GetSelectedNodesListAsync(document, "//span[@class='font-li-body font-size- osi-black-87 sc-ion-label-md']");
+        var degrees = GetSelectedNodesHashSetAsync(document, "//label[@class='font-size-xl lh-20']");
+        var courses =  GetSelectedNodesListAsync(document, "//ion-row[@class='sc-ion-label-md md']");
+        var subjects =  GetSelectedNodesListAsync(document, "//span[@class='font-li-body font-size- osi-black-87 sc-ion-label-md']");
 
-
-
-        if (courses.Count == 0 || degrees.Count == 0)
+        Task.WaitAll(degrees, courses, subjects);
+        
+        if (courses.Result.Count == 0 || degrees.Result.Count == 0)
         {
             await LoadProgressionPage();
         }
         else
         {
-            IList<IList<string>> degreesList = SetDegrees(degrees);
-            IList<string> coursesNames = GrabCourseName(courses);
+            IList<IList<string>> degreesList = SetDegrees(degrees.Result);
+            IList<string> coursesNames = GrabCourseName(courses.Result);
 
             int courseInteger = 0;
-            for (int i = 0; i < subjects.Count; i += 3)
+            for (int i = 0; i < subjects.Result.Count; i += 3)
             {
-                int range = Math.Min(3, subjects.Count - i);
-                IList<string> data = subjects.GetRange(i, range);
+                int range = Math.Min(3, subjects.Result.Count - i);
+                IList<string> data = subjects.Result.GetRange(i, range);
 
                 if (IsFirstYear(data[1]))
                 {

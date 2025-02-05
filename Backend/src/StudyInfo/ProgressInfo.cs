@@ -30,9 +30,7 @@ public class ProgressInfo
     {
         Degree degree = new Degree()
         {
-            Name = degreeName,
-            CurrentPoints = 1,
-            TotalPoints = 2
+            Name = degreeName
         };
 
         degree = DynamicDatabaseTool.AddOrUpdate(degree, "Name", degree.Name, _dbContext);
@@ -58,12 +56,26 @@ public class ProgressInfo
             subjects.Add(subjectInfo);
         }
 
+        int totalPoints = 0;
+
         foreach (Subject subject in subjects)
         {
             DynamicDatabaseTool.AddOrUpdate(subject, "CourseName", subject.CourseName, _dbContext);
+            totalPoints += subject.Points;
         }
 
+        CalculateNewPoints(degree, totalPoints);
+
         return subjects;
+    }
+
+    private void CalculateNewPoints(Degree degree, int totalPoints)
+    {
+        if (degree.CurrentPoints < totalPoints)
+        {
+            degree.CurrentPoints = totalPoints;
+            DynamicDatabaseTool.AddOrUpdate(degree, "Name", degree.Name, _dbContext);
+        }
     }
 
     // Functies hieronder is voor als je de cijfers meegeeft inplaats van de studiepunten
