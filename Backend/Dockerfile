@@ -72,9 +72,22 @@ WORKDIR /app
 
 # Install Chromium, Chromedriver, and required dependencies for Selenium
 RUN apt-get update \
-    && apt-get install -y chromium-browser chromium-chromedriver \
-    && apt-get install -y libgconf-2-4 libnss3 libatk-bridge2.0-0 libx11-xcb1 libxcomposite1 libxrandr2 libgbm1 \
-    && apt-get install -y curl \
+    && apt-get install -y \
+    chromium-browser \
+    chromium-chromedriver \
+    libgconf-2-4 \
+    libnss3 \
+    libatk-bridge2.0-0 \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxrandr2 \
+    libgbm1 \
+    libgtk-3-0 \
+    libdbus-1-3 \
+    fonts-liberation \
+    libappindicator3-1 \
+    libasound2 \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Selenium Manager globally to manage drivers

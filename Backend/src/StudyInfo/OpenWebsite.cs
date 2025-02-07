@@ -111,6 +111,17 @@ public class OpenWebsite : IDisposable
 
         options.AddArguments("--headless", "--disable-gpu", "--no-sandbox");
 
+        if (System.Environment.OSVersion.Platform == PlatformID.Unix)
+        {
+            // Ubuntu/Docker (Linux-based system)
+            options.BinaryLocation = "/usr/bin/chromium-browser";
+        }
+        else if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
+        {
+            // Windows
+            //options.BinaryLocation = @"C:\Program Files\Chromium\chromium.exe";
+        }
+
         return options;
     }
 
