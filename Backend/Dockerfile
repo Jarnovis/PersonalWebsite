@@ -11,6 +11,11 @@ RUN dotnet restore ./Backend/Backend.csproj
 
 # Copy the rest of the app files and build the project
 COPY ./Backend/. ./Backend/
+
+# Run dotnet restore explicitly again before publish (to make sure packages are resolved)
+RUN dotnet restore ./Backend/Backend.csproj
+
+# Publish the application
 RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish --no-restore
 
 # Use the official .NET 9 runtime image for running the application
