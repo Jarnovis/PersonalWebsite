@@ -86,12 +86,16 @@ RUN apt-get update && apt-get install -y \
     curl \
     --no-install-recommends
 
-# Install Chromedriver
+# Install unzip and download chromedriver
+RUN apt-get update && apt-get install -y unzip chromium libnss3 libgdk-pixbuf2.0-0 libatk-bridge2.0-0 libatk1.0-0 libcups2 libxss1 libappindicator3-1 libasound2 fonts-liberation xdg-utils --no-install-recommends
+
+# Download chromedriver
 RUN curl -sS https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip -o chromedriver.zip \
-&& unzip chromedriver.zip \
-&& mv chromedriver /usr/local/bin/ \
-&& chmod +x /usr/local/bin/chromedriver \
-&& rm chromedriver.zip
+    && unzip chromedriver.zip \
+    && mv chromedriver /usr/local/bin/ \
+    && chmod +x /usr/local/bin/chromedriver \
+    && rm chromedriver.zip
+
 
 
 # Set environment variables for Selenium to use headless Chromium
