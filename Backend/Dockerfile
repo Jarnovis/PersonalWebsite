@@ -86,13 +86,12 @@ RUN apt-get update && apt-get install -y \
     curl \
     --no-install-recommends
 
-
-# Install Selenium Manager globally to manage drivers
-RUN curl -sS https://github.com/SeleniumHQ/selenium/releases/download/selenium-4.7.0/selenium-manager-linux-x64.tar.gz -o selenium-manager.tar.gz \
-    && tar -xvzf selenium-manager.tar.gz \
-    && mv selenium-manager-linux-x64 /usr/local/bin/selenium-manager \
-    && chmod +x /usr/local/bin/selenium-manager \
-    && rm selenium-manager.tar.gz
+# Install Chromedriver
+RUN curl -sS https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip -o chromedriver.zip \
+&& unzip chromedriver.zip \
+&& mv chromedriver /usr/local/bin/ \
+&& chmod +x /usr/local/bin/chromedriver \
+&& rm chromedriver.zip
 
 
 # Set environment variables for Selenium to use headless Chromium
