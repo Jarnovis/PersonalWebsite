@@ -88,11 +88,12 @@ RUN apt-get update && apt-get install -y \
 
 
 # Install Selenium Manager globally to manage drivers
-RUN curl -sS https://selenium-release.storage.googleapis.com/selenium-manager-linux-x64.tar.gz -o selenium-manager.tar.gz \
-    && tar -xzf selenium-manager.tar.gz \
+RUN curl -sS https://github.com/SeleniumHQ/selenium/releases/download/selenium-4.7.0/selenium-manager-linux-x64.tar.gz -o selenium-manager.tar.gz \
+    && tar -xvzf selenium-manager.tar.gz \
     && mv selenium-manager-linux-x64 /usr/local/bin/selenium-manager \
     && chmod +x /usr/local/bin/selenium-manager \
     && rm selenium-manager.tar.gz
+
 
 # Set environment variables for Selenium to use headless Chromium
 ENV CHROME_BIN=/usr/bin/chromium-browser
