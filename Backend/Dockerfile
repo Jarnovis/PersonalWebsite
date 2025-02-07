@@ -72,7 +72,7 @@ WORKDIR /app
 
 # Install required libraries for running Chromium
 RUN apt-get update && apt-get install -y \
-    chromium-browser \
+    chromium \
     libnss3 \
     libgdk-pixbuf2.0-0 \
     libatk-bridge2.0-0 \
@@ -84,6 +84,7 @@ RUN apt-get update && apt-get install -y \
     fonts-liberation \
     xdg-utils \
     --no-install-recommends
+
 
 # Install Selenium Manager globally to manage drivers
 RUN curl -sS https://selenium-release.storage.googleapis.com/selenium-manager-linux-x64.tar.gz -o selenium-manager.tar.gz \
