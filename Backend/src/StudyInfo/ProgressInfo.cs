@@ -1,11 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.Contracts;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using Microsoft.EntityFrameworkCore;
+using System.Text;
 using WebApi.Database;
+using WebApi.Enviroment;
+using WebApi.Services.EmailServices;
 
 namespace WebApi.StudyInfo;
 
@@ -28,9 +24,12 @@ public class ProgressInfo
 
     public Degree RegistrateDegree(string degreeName)
     {
+        Degree degreeForPoints = DynamicDatabaseTool.SelectExistingRow<Degree>("Name", degreeName, _dbContext);
         Degree degree = new Degree()
         {
-            Name = degreeName
+            Name = degreeName,
+            CurrentPoints = degreeForPoints.CurrentPoints,
+            TotalPoints = degreeForPoints.TotalPoints
         };
 
         degree = DynamicDatabaseTool.AddOrUpdate(degree, "Name", degree.Name, _dbContext);
@@ -38,7 +37,7 @@ public class ProgressInfo
         return degree;
     }
 
-    public IList<Subject> RegistrateSubjects(IList<string> subjectsList, Degree degree)
+    public async Task<IList<Subject>> RegistrateSubjects(IList<string> subjectsList, Degree degree)
     {
         IList<Subject> subjects = new List<Subject>();
 
@@ -57,25 +56,80 @@ public class ProgressInfo
         }
 
         int totalPoints = 0;
+        Dictionary<string, int> subjectsWithPoints = new Dictionary<string, int>();
 
         foreach (Subject subject in subjects)
         {
+            Console.WriteLine(subject.CourseName);
+            Subject temp = DynamicDatabaseTool.SelectExistingRow<Subject>("CourseName", subject.CourseName, _dbContext);
+
+            if (temp != null)
+            {
+                if (subject.Points > temp.Points)
+                {
+                    subjectsWithPoints[subject.CourseName] = subject.Points;
+                }
+            }
+            else
+            {
+                subjectsWithPoints[subject.CourseName] = subject.Points;
+            }
+
             DynamicDatabaseTool.AddOrUpdate(subject, "CourseName", subject.CourseName, _dbContext);
+
             totalPoints += subject.Points;
         }
 
-        CalculateNewPoints(degree, totalPoints);
+        await CalculateNewPoints(degree, totalPoints, subjectsWithPoints);
 
         return subjects;
     }
 
-    private void CalculateNewPoints(Degree degree, int totalPoints)
+    private async Task CalculateNewPoints(Degree degree, int totalPoints, Dictionary<string, int> subjectsWithPoints)
     {
         if (degree.CurrentPoints < totalPoints)
         {
-            degree.CurrentPoints = totalPoints;
-            DynamicDatabaseTool.AddOrUpdate(degree, "Name", degree.Name, _dbContext);
+            using (EnvConfig env = new EnvConfig())
+            using (EmailService emailService = new EmailService(new EnvConfig()))
+            {
+                degree.CurrentPoints = totalPoints;
+                Console.WriteLine($"Points: {degree.CurrentPoints}, {totalPoints}");
+                if (degree.CurrentPoints == totalPoints)
+                {
+                    await emailService.Send(env.Get("PERSONAL_EMAIL"), $"Updated Study Points {degree.Name}", CreatePointsUpdateEmail(degree, totalPoints, subjectsWithPoints));
+                    DynamicDatabaseTool.AddOrUpdate(degree, "Name", degree.Name, _dbContext);
+                }
+            }
         }
+    }
+
+    private string CreatePointsUpdateEmail(Degree degree, int totalPoints, Dictionary<string, int> subjectWithPoints)
+    {
+        StringBuilder listed = new();
+
+        foreach (var subject in subjectWithPoints)
+        {
+            listed.Append($"<li>{subject.Key}: {subject.Value} points</li>");
+        }
+        
+        listed.ToString();
+        decimal percentage = (decimal)totalPoints / degree.TotalPoints * 100;
+
+        string body = @$"<h1>Update for {degree.Name}</h1>
+        <h2>Points Summery</h2>
+        <ul>
+            <li>Old points: {degree.CurrentPoints}</li>
+            <li>New points: {totalPoints}</li>
+            <li>Points to get: {degree.TotalPoints - totalPoints}</li>
+            <li>Overview: {totalPoints}/{degree.TotalPoints}</li>
+        </ul>
+        <p>You have currently {percentage}% of your {degree.Name}</p>
+        
+        <h2>Subject(s) that gave you the new points</h2>
+        <ul>{listed}</ul>
+        ";
+
+        return body;
     }
 
     // Functies hieronder is voor als je de cijfers meegeeft inplaats van de studiepunten

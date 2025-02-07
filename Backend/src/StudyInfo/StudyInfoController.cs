@@ -18,7 +18,7 @@ public class StudyInfoController : ControllerBase
     public async Task<IActionResult> GetDegreeInfo(string degreeName)
     {
 
-        Degree degree = DynamicDatabaseTool.SelectExistingItem<Degree>("Name", degreeName, _dbContext);
+        Degree degree = DynamicDatabaseTool.SelectExistingRow<Degree>("Name", degreeName, _dbContext);
 
         if (degree != null)
         {
@@ -34,7 +34,7 @@ public class StudyInfoController : ControllerBase
     {
         SelectFromDatabase select = new SelectFromDatabase(_dbContext);
 
-        var info = select.GetRowFromTable<Subject>("CourseName", subjectName);
+        var info = select.GetRowsFromTable<Subject>("CourseName", subjectName);
 
         if (info.Count > 0)
         {

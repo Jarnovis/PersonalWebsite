@@ -150,6 +150,21 @@ public class CollectStudyInfoProgression
         var subjects =  GetSelectedNodesListAsync(document, "//span[@class='font-li-body font-size- osi-black-87 sc-ion-label-md']");
 
         Task.WaitAll(degrees, courses, subjects);
+
+        foreach (string s in degrees.Result)
+        {
+            Console.WriteLine(s);
+        }
+
+        foreach (string s in courses.Result)
+        {
+            Console.WriteLine(s);
+        }
+
+        foreach (string s in subjects.Result)
+        {
+            Console.WriteLine(s);
+        }
         
         if (courses.Result.Count == 0 || degrees.Result.Count == 0)
         {

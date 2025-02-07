@@ -2,6 +2,6 @@
 .env
 
 //Database
-PersonalWebsite.db
-PersonalWebsite.db-shm
-PersonalWebsite.db-wal
+//PersonalWebsite.db
+//PersonalWebsite.db-shm
+//PersonalWebsite.db-wal

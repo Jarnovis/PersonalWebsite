@@ -1,9 +1,9 @@
 
-using Microsoft.Extensions.DependencyInjection;
+using WebApi.Services.EmailServices;
 using WebApi.Database;
 using WebApi.StudyInfo;
 
-namespace WebApi.BackgroundServices;
+namespace WebApi.Services.BackgroundServices;
 
 public class StudyProgressionBackgroundSerice : BackgroundService
 {

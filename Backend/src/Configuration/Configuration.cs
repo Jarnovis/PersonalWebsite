@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using WebApi.BackgroundServices;
+using WebApi.Services.BackgroundServices;
 using WebApi.Database;
 using WebApi.Enviroment;
 

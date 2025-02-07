@@ -1,6 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
+using OpenQA.Selenium.BiDi.Modules.BrowsingContext;
+using WebApi.StudyInfo;
 
 namespace WebApi.Database;
 
@@ -16,7 +19,7 @@ public class DynamicDatabaseTool
 
         return predicate;
     }
-    public static T SelectExistingItem<T>(string columnName, object columnValue, DatabaseContext dbContext) where T : class
+    public static T SelectExistingRow<T>(string columnName, object columnValue, DatabaseContext dbContext) where T : class
     {
         var predicate = CreatePredicate<T>(columnName, columnValue);
         var existingItem = dbContext.Set<T>().FirstOrDefault(predicate);
@@ -24,7 +27,7 @@ public class DynamicDatabaseTool
         return existingItem;
     }
 
-    public static List<T> SelectExistingRow<T>(string identityColumn, object identityValue, DatabaseContext dbContext) where T : class
+    public static List<T> SelectExistingRows<T>(string identityColumn, object identityValue, DatabaseContext dbContext) where T : class
     {
         var predicate = CreatePredicate<T>(identityColumn, identityValue);
         var existingItems = dbContext.Set<T>().Where(predicate).ToList();
@@ -34,7 +37,7 @@ public class DynamicDatabaseTool
 
     public static T AddOrUpdate<T>(T data, string columnName, object columnValue, DatabaseContext dbContext) where T : class
     {
-        var existingItem = SelectExistingItem<T>(columnName, columnValue, dbContext);
+        var existingItem = SelectExistingRow<T>(columnName, columnValue, dbContext);
 
         if (existingItem == null)
         {
@@ -45,6 +48,10 @@ public class DynamicDatabaseTool
         }
         else
         {
+            if (data.GetType() == new Degree().GetType())
+            {
+                Console.WriteLine("Degree");
+            }
             UpdateValue(data, existingItem, dbContext);
             return existingItem;
         }
@@ -95,6 +102,7 @@ public class DynamicDatabaseTool
         }
 
         dbContext.Attach(row);
+        dbContext.Entry(row).State = EntityState.Modified;
         dbContext.SaveChanges();
     }
 }
