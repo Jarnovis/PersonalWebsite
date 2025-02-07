@@ -70,25 +70,21 @@ RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish --no-rest
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Install Chromium, Chromedriver, and required dependencies for Selenium
-RUN apt-get update \
-    && apt-get install -y \
+# Install required libraries for running Chromium
+RUN apt-get update && apt-get install -y \
     chromium-browser \
-    chromium-chromedriver \
-    libgconf-2-4 \
     libnss3 \
+    libgdk-pixbuf2.0-0 \
     libatk-bridge2.0-0 \
-    libx11-xcb1 \
-    libxcomposite1 \
-    libxrandr2 \
-    libgbm1 \
-    libgtk-3-0 \
-    libdbus-1-3 \
-    fonts-liberation \
+    libatk1.0-0 \
+    libcups2 \
+    libxss1 \
     libappindicator3-1 \
     libasound2 \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+    fonts-liberation \
+    xdg-utils \
+    --no-install-recommends
+
 
 # Install Selenium Manager globally to manage drivers
 RUN curl -sS https://selenium-release.storage.googleapis.com/selenium-manager-linux-x64.tar.gz -o selenium-manager.tar.gz \
