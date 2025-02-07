@@ -46,73 +46,52 @@
 # Set the entry point for the container
 #ENTRYPOINT ["dotnet", "Backend.dll"]
 
-# Use the official .NET 9 SDK image for building the application
+# Stage 1: Build stage for .NET application
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# Copy the solution file and backend project files from the context
-COPY ./Backend/*.csproj ./Backend/
+# Copy the .NET solution and restore dependencies
 COPY *.sln ./
-
-# Restore dependencies for the Backend project
+COPY Backend/*.csproj ./Backend/
 RUN dotnet restore ./Backend/Backend.csproj
 
-# Copy the rest of the app files and build the project
+# Copy the remaining files and build the application
 COPY ./Backend/. ./Backend/
-
-# Run dotnet restore explicitly again before publish (to make sure packages are resolved)
-RUN dotnet restore ./Backend/Backend.csproj
-
-# Publish the application
 RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish --no-restore
 
-# Use the official .NET 9 runtime image for running the application
+# Stage 2: Runtime stage for the application
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Install required libraries for running Chromium
-RUN apt-get update && apt-get install -y \
+# Install necessary dependencies, including Chromium and Chromedriver for Selenium
+RUN apt-get update \
+    && apt-get install -y \
     chromium \
+    chromium-driver \
     libnss3 \
     libgdk-pixbuf2.0-0 \
-    libatk-bridge2.0-0 \
-    libatk1.0-0 \
-    libcups2 \
-    libxss1 \
-    libappindicator3-1 \
-    libasound2 \
-    fonts-liberation \
-    xdg-utils \
+    unzip \
     curl \
-    --no-install-recommends
+    && apt-get clean
 
-# Install unzip and download chromedriver
-RUN apt-get update && apt-get install -y unzip chromium libnss3 libgdk-pixbuf2.0-0 libatk-bridge2.0-0 libatk1.0-0 libcups2 libxss1 libappindicator3-1 libasound2 fonts-liberation xdg-utils --no-install-recommends
-
-# Download chromedriver
+# Install Selenium WebDriver if needed
+# (This step may vary depending on how your app interacts with Selenium)
 RUN curl -sS https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip -o chromedriver.zip \
     && unzip chromedriver.zip \
     && mv chromedriver /usr/local/bin/ \
     && chmod +x /usr/local/bin/chromedriver \
     && rm chromedriver.zip
 
-RUN apt-get update && apt-get install -y chromium-browser
-
-
-# Set environment variables for Selenium to use headless Chromium
-ENV CHROME_BIN=/usr/bin/chromium-browser
-ENV CHROMEDRIVER_BIN=/usr/lib/chromium-browser/chromedriver
-
-
-# Copy the published files from the build stage
+# Copy the published .NET app into the container
 COPY --from=build /app/publish .
 
-# Set a non-root user for security
+# Set up the application user and group (optional but recommended for security)
 RUN addgroup --system appgroup && adduser --system --group appuser
 USER appuser
 
-# Expose the port your app runs on
-EXPOSE 8080
+# Expose the ports your application will run on
+EXPOSE 5072
 
-# Set the entry point for the container
-ENTRYPOINT ["dotnet", "Backend.dll"]
+# Command to run the application
+CMD ["dotnet", "Backend.dll"]
+
