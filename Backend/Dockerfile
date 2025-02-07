@@ -85,7 +85,6 @@ RUN apt-get update && apt-get install -y \
     xdg-utils \
     --no-install-recommends
 
-
 # Install Selenium Manager globally to manage drivers
 RUN curl -sS https://selenium-release.storage.googleapis.com/selenium-manager-linux-x64.tar.gz -o selenium-manager.tar.gz \
     && tar -xzf selenium-manager.tar.gz \
@@ -94,9 +93,9 @@ RUN curl -sS https://selenium-release.storage.googleapis.com/selenium-manager-li
     && rm selenium-manager.tar.gz
 
 # Set environment variables for Selenium to use headless Chromium
-ENV DISPLAY=:99
 ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV CHROMEDRIVER_BIN=/usr/lib/chromium-browser/chromedriver
+
 
 # Copy the published files from the build stage
 COPY --from=build /app/publish .
