@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    image: backendwebsite
+    container_name: backendwebsite
+    ports:
+      - "5000:80"  # Map backend port to host machine (assuming backend uses port 80 in Dockerfile)
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    #depends_on:
+      #- frontend  # Ensures frontend is ready before backend starts (optional, for linked services)
+    networks:
+      - website_network
+
+  #frontend:
+    #build:
+      #context: ./Frontend
+      #dockerfile: Dockerfile
+    #image: frontendwebsite
+    #container_name: frontendwebsite
+    #ports:
+      #- "3000:80"  # Map frontend port to host machine
+    #networks:
+      #- website_network
+    #depends_on:
+      #- backend  # Ensure backend is up and running before frontend starts (optional)
+      
+networks:
+  website_network:
+    driver: bridge
