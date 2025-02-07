@@ -5,12 +5,21 @@ services:
     build:
       context: .
       dockerfile: Backend/Dockerfile
+    environment:
+      - DB_IP=${DB_IP}
+      - DB_SHAREFOLDER=${DB_SHAREFOLDER}
+      - DB_DATABASE=${DB_DATABASE}
+      - STUDENT_EMAIL=${STUDENT_EMAIL}
+      - STUDENT_PASSWORD=${STUDENT_PASSWORD}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_EMAIL=${SMTP_EMAIL}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - PERSONAL_EMAIL=${PERSONAL_EMAIL}
     image: backendwebsite
     container_name: backendwebsite
     ports:
       - "5000:80"  # Map backend port to host machine (assuming backend uses port 80 in Dockerfile)
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
     #depends_on:
       #- frontend  # Ensures frontend is ready before backend starts (optional, for linked services)
     networks:
