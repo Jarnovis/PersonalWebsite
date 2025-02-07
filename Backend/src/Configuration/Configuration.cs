@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Services.BackgroundServices;
 using WebApi.Database;
 using WebApi.Enviroment;
+using WebApi.Services.EmailServices;
 
 namespace WebApi.Configure;
 
@@ -45,6 +46,8 @@ public class Configuration
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();
+        
+        SendStartupMail();
 
         app.Run();
     }
@@ -122,5 +125,18 @@ public class Configuration
         SetLogginForBuilder(builder);
 
         return builder;
+    }
+
+    private static void SendStartupMail()
+    {
+        string body = @$"<h1>Startup Backend</h1>
+        <p>The backend is starting up on the server.</p>
+        <p>Check the serverlogs for possible errors.</p>";
+        
+        using (EnvConfig env = new EnvConfig())
+        using (EmailService emailService = new EmailService(env))
+        {
+            emailService.Send(env.Get("PERSONAL_EMAIL"), "Startup Backend", body);
+        }
     }
 }

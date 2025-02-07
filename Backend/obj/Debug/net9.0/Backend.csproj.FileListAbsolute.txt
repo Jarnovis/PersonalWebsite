@@ -199,3 +199,9 @@ D:\codes\PersonalWebsite\Backend\bin\Debug\net9.0\runtimes\win-x64\native\krbcc6
 D:\codes\PersonalWebsite\Backend\bin\Debug\net9.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
 D:\codes\PersonalWebsite\Backend\bin\Debug\net9.0\MySqlConnector.dll
 D:\codes\PersonalWebsite\Backend\bin\Debug\net9.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\codes\PersonalWebsite\Backend\bin\Debug\net9.0\publish\web.config
+D:\codes\PersonalWebsite\Backend\bin\Debug\net9.0\publish\Backend.deps.json
+D:\codes\PersonalWebsite\Backend\bin\Debug\net9.0\publish\Backend.runtimeconfig.json
+D:\codes\PersonalWebsite\Backend\bin\Debug\net9.0\publish\Backend.staticwebassets.endpoints.json
+D:\codes\PersonalWebsite\Backend\bin\Debug\net9.0\publish\src\appsettings.Development.json
+D:\codes\PersonalWebsite\Backend\bin\Debug\net9.0\publish\src\appsettings.json
