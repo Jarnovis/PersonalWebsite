@@ -83,6 +83,7 @@ RUN apt-get update && apt-get install -y \
     libasound2 \
     fonts-liberation \
     xdg-utils \
+    curl \
     --no-install-recommends
 
 
