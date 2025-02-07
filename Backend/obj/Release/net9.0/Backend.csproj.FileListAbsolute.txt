@@ -199,3 +199,9 @@ D:\codes\PersonalWebsite\Backend\obj\Release\net9.0\refint\Backend.dll
 D:\codes\PersonalWebsite\Backend\obj\Release\net9.0\Backend.pdb
 D:\codes\PersonalWebsite\Backend\obj\Release\net9.0\Backend.genruntimeconfig.cache
 D:\codes\PersonalWebsite\Backend\obj\Release\net9.0\ref\Backend.dll
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\web.config
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\Backend.deps.json
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\Backend.runtimeconfig.json
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\Backend.staticwebassets.endpoints.json
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\src\appsettings.Development.json
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\src\appsettings.json
