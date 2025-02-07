@@ -50,6 +50,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
+# Clean the NuGet cache to avoid potential corrupted caches
+RUN dotnet nuget locals all --clear
+
 # Copy the .NET solution and restore dependencies
 COPY *.sln ./
 COPY Backend/*.csproj ./Backend/
