@@ -56,7 +56,10 @@ RUN dotnet nuget locals all --clear
 # Copy the .NET solution and restore dependencies
 COPY *.sln ./
 COPY Backend/*.csproj ./Backend/
+# Ensure restore happens before publish
 RUN dotnet restore ./Backend/Backend.csproj
+RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish --no-restore
+
 
 # Copy the remaining files and build the application
 COPY ./Backend/. ./Backend/
