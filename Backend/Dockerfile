@@ -2,14 +2,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# Copy the project files and restore dependencies
-COPY ../*.sln ./
-COPY Backend/Backend.csproj Backend/
-RUN dotnet restore "Backend/Backend.csproj"
+# Copy the solution file and backend project files from the context
+COPY ./Backend/*.csproj ./Backend/
+COPY *.sln ./
+
+# Restore dependencies for the Backend project
+RUN dotnet restore ./Backend/Backend.csproj
 
 # Copy the rest of the app files and build the project
-COPY . . 
-RUN dotnet publish "Backend/Backend.csproj" -c Release -o /app/publish --no-restore
+COPY ./Backend/. ./Backend/
+RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish --no-restore
 
 # Use the official .NET 9 runtime image for running the application
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
