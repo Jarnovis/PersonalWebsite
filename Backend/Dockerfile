@@ -96,6 +96,7 @@ RUN curl -sS https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedri
     && chmod +x /usr/local/bin/chromedriver \
     && rm chromedriver.zip
 
+RUN apt-get update && apt-get install -y chromium-browser
 
 
 # Set environment variables for Selenium to use headless Chromium
