@@ -114,7 +114,7 @@ public class OpenWebsite : IDisposable
         if (System.Environment.OSVersion.Platform == PlatformID.Unix)
         {
             // Ubuntu/Docker (Linux-based system)
-            options.BinaryLocation = "/snap/bin/chromium";
+            options.BinaryLocation = "/snap/chromium/current/usr/bin/chromium";
         }
         else if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
