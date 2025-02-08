@@ -57,13 +57,13 @@ RUN dotnet nuget locals all --clear
 COPY *.sln ./
 COPY Backend/*.csproj ./Backend/
 # Ensure restore happens before publish
-RUN dotnet restore ./Backend/Backend.csproj
-RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish --no-restore
+RUN dotnet restore ./Backend/WebApi.csproj
+RUN dotnet publish ./Backend/WebApi.csproj -c Release -o /app/publish --no-restore
 
 
 # Copy the remaining files and build the application
 COPY ./Backend/. ./Backend/
-RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish --no-restore
+RUN dotnet publish ./Backend/WebApi.csproj -c Release -o /app/publish --no-restore
 
 # Stage 2: Runtime stage for the application
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
