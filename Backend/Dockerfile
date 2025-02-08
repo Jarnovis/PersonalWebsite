@@ -74,7 +74,6 @@ WORKDIR /app
 RUN apt-get update \
     && apt-get install -y \
     chromium \
-    chromium-browser \
     chromium-driver \
     libnss3 \
     libgdk-pixbuf2.0-0 \
