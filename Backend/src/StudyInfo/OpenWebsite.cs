@@ -29,26 +29,52 @@ public class OpenWebsite : IDisposable
             _driver.Navigate().GoToUrl(url);
 
 
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(20));  
+
             Thread.Sleep(2000);
+            try
+            {   
+                var emailField = wait.Until(d => d.FindElement(By.Id("i0116")));
+                emailField.SendKeys(_envConfig.Get("STUDENT_EMAIL"));
+            }
+            catch (NoSuchElementException ex)
+            {
+                Console.WriteLine($"No email field: {ex.Message}");
+            }
             
-
-            var emailField = wait.Until(d => d.FindElement(By.Id("i0116")));
-            emailField.SendKeys(_envConfig.Get("STUDENT_EMAIL"));
-
-            var nextButton = _driver.FindElement(By.Id("idSIButton9"));
-            nextButton.Click();
+            try
+            {
+                var nextButton = _driver.FindElement(By.Id("idSIButton9"));
+                nextButton.Click();
+            }
+            catch (NoSuchElementException ex)
+            {
+                Console.WriteLine($"No next buton: {ex.Message}");
+            }
 
             Thread.Sleep(2000);
+            try
+            {
+                var passwordField = wait.Until(d => d.FindElement(By.Id("i0118"))); 
+                passwordField.SendKeys(_envConfig.Get("STUDENT_PASSWORD"));
+            }
+            catch (NoSuchElementException ex)
+            {
+                Console.WriteLine($"No password field: {ex.Message}");
+            }
 
-            var passwordField = wait.Until(d => d.FindElement(By.Id("i0118"))); 
-            passwordField.SendKeys(_envConfig.Get("STUDENT_PASSWORD"));
-
-            var loginButton = _driver.FindElement(By.Id("idSIButton9"));
-            loginButton.Click();
+            try
+            {
+                var loginButton = _driver.FindElement(By.Id("idSIButton9"));
+                loginButton.Click();
+            }
+            catch (NoSuchElementException ex)
+            {
+                Console.WriteLine($"No login button: {ex.Message}");
+            }
 
             Thread.Sleep(3000);
-
+            
             foreach (var handle in _driver.WindowHandles)
             {
                 if (handle != _mainWindowHanlde)
@@ -109,7 +135,7 @@ public class OpenWebsite : IDisposable
     {
         ChromeOptions options = new ChromeOptions();
 
-        options.AddArguments("--headless", "--disable-gpu", "--no-sandbox", "--remote-debuggin-port=9222, --disable-dev-shm-usage");
+        options.AddArguments("--headless", "--disable-gpu", "--no-sandbox", "--remote-debugging-port=9222", "--disable-dev-shm-usage");
 
         if (System.Environment.OSVersion.Platform == PlatformID.Unix)
         {
@@ -119,7 +145,15 @@ public class OpenWebsite : IDisposable
         else if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
             // Windows
-            //options.BinaryLocation = @"C:\Program Files\Chromium\chromium.exe";
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "selenium-manager", "windows", "selenium-manager.exe");
+            if (File.Exists(path))
+            {
+                options.BinaryLocation = path;
+            }
+            else
+            {
+                Console.WriteLine($"ERROR: Selenium Manager not found at {path}");
+            }
         }
 
         return options;
