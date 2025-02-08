@@ -143,13 +143,21 @@ public class OpenWebsite : IDisposable
         if (System.Environment.OSVersion.Platform == PlatformID.Unix)
         {
             // Ubuntu/Docker (Linux-based system)
-            options.BinaryLocation = "/usr/bin/chromium";
-            options.AddArguments("--headless", 
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "selenium-manager", "linux", "selenium-manager");
+            if (File.Exists(path))
+            {
+                options.BinaryLocation = path;
+                options.AddArguments("--headless", 
                              "--disable-gpu", 
                              "--no-sandbox", 
                              "--disable-dev-shm-usage", 
                              "--remote-debugging-port=9222", 
                              "--window-size=1920,1080");
+            }
+            else
+            {
+                Console.WriteLine($"ERROR: Selenium Manager not found at {path}");
+            }
         }
         else if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
