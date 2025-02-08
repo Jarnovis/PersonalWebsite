@@ -49,6 +49,9 @@ RUN apt-get update \
        xvfb \
     && apt-get clean
 
+# Create appuser and appgroup before using chown
+RUN addgroup --system appgroup && adduser --system --group appuser
+
 # Fix permissions for cache folder
 RUN mkdir -p /app/.cache/selenium && chown -R appuser:appgroup /app/.cache
 
@@ -88,7 +91,6 @@ RUN echo "#!/bin/bash \n\
 RUN chmod +x /app/start-selenium.sh
 
 # Set the user to run the application as a non-root user (appuser)
-RUN addgroup --system appgroup && adduser --system --group appuser
 USER appuser
 
 # Command to run the application
