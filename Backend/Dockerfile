@@ -55,7 +55,7 @@ RUN chmod +x /usr/bin/chromium
 RUN which chromium
 
 # Copy the entire publish directory
-COPY --from=build /app/Backend/bin/Release/net9.0/publish/selenium-manager /app/selenium-manager
+COPY --from=build /app/publish/selenium-manager/linux/selenium-manager /app/selenium-manager
 
 # Verify the selenium-manager files are copied correctly
 RUN ls /app/publish/selenium-manager
