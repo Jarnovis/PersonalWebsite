@@ -100,6 +100,10 @@
               "target": "Package",
               "version": "[4.28.0, )"
             },
+            "Selenium.WebDriver.ChromeDriver": {
+              "target": "Package",
+              "version": "[133.0.6943.5300, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[7.2.0, )"

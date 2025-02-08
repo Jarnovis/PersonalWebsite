@@ -23,11 +23,9 @@ RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Install necessary dependencies, including Chromium and Chromedriver for Selenium
+# Install necessary dependencies for selenium-manager
 RUN apt-get update \
     && apt-get install -y \
-    chromium \
-    chromium-driver \
     libnss3 \
     libgdk-pixbuf2.0-0 \
     libatk-bridge2.0-0 \
@@ -43,28 +41,6 @@ RUN apt-get update \
     unzip \
     libgconf-2-4 \
     && apt-get clean
-
-
-
-# Download and install ChromeDriver version 133.0.6943.53
-RUN curl -sS https://storage.googleapis.com/chrome-for-testing-public/133.0.6943.53/linux64/chrome-linux64.zip -o chromedriver.zip \
-    && unzip chromedriver.zip \
-    && ls -l chrome-linux64 \
-    && mv chrome-linux64/chromedriver /usr/local/bin/ \
-    && chmod +x /usr/local/bin/chromedriver \
-    && rm -rf chromedriver.zip chrome-linux64
-
-# Set environment variables for Selenium to use headless Chromium
-ENV DISPLAY=:99
-ENV CHROME_BIN=/usr/bin/chromium
-ENV CHROMEDRIVER_BIN=/usr/local/bin/chromedriver
-
-# Make sure chromedriver and chromium have the correct permissions
-RUN chmod +x /usr/local/bin/chromedriver
-RUN chmod +x /usr/bin/chromium
-
-# Debug: Verify chromium installation
-RUN which chromium
 
 # Copy the published app from the build stage
 COPY --from=build /app/publish/ /app/
@@ -82,25 +58,20 @@ EXPOSE 5072
 # Ensure the selenium-manager binary has execute permissions
 RUN ls -R /app/selenium-manager
 
-# Verify the path to chromium
-RUN which chromium
+# Verify the path to selenium-manager
+RUN ls -l /app/selenium-manager/linux/selenium-manager
 
 # Switch to root user to change permissions
 USER root
 
 # Ensure selenium-manager has execute permissions
 RUN chmod +x /app/selenium-manager/linux/selenium-manager
-RUN ls -l /app/selenium-manager/linux/selenium-manager
 
 # Switch back to appuser or your regular non-root user
 USER appuser
 
-# Run the selenium-manager command
+# Run the selenium-manager command (Optional: You can comment this out if it's not required during build)
 RUN /app/selenium-manager/linux/selenium-manager --browser "chrome" --browser-path "/usr/bin/chromium" --language-binding csharp --output json
-
-
-
-
 
 # Command to run the application
 CMD ["dotnet", "Backend.dll"]

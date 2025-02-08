@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kBilbO0Z0w0=",
+  "dgSpecHash": "IN3fxXDAEUc=",
   "success": true,
   "projectFilePath": "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj",
   "expectedPackageFiles": [
@@ -67,6 +67,7 @@
     "C:\\Users\\jdvis\\.nuget\\packages\\mysql.entityframeworkcore\\9.0.0\\mysql.entityframeworkcore.9.0.0.nupkg.sha512",
     "C:\\Users\\jdvis\\.nuget\\packages\\selenium.support\\4.28.0\\selenium.support.4.28.0.nupkg.sha512",
     "C:\\Users\\jdvis\\.nuget\\packages\\selenium.webdriver\\4.28.0\\selenium.webdriver.4.28.0.nupkg.sha512",
+    "C:\\Users\\jdvis\\.nuget\\packages\\selenium.webdriver.chromedriver\\133.0.6943.5300\\selenium.webdriver.chromedriver.133.0.6943.5300.nupkg.sha512",
     "C:\\Users\\jdvis\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.10\\sqlitepclraw.bundle_e_sqlite3.2.1.10.nupkg.sha512",
     "C:\\Users\\jdvis\\.nuget\\packages\\sqlitepclraw.core\\2.1.10\\sqlitepclraw.core.2.1.10.nupkg.sha512",
     "C:\\Users\\jdvis\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.10\\sqlitepclraw.lib.e_sqlite3.2.1.10.nupkg.sha512",

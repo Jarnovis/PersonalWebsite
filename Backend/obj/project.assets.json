@@ -1281,6 +1281,12 @@
           "buildTransitive/Selenium.WebDriver.targets": {}
         }
       },
+      "Selenium.WebDriver.ChromeDriver/133.0.6943.5300": {
+        "type": "package",
+        "build": {
+          "build/Selenium.WebDriver.ChromeDriver.targets": {}
+        }
+      },
       "SQLitePCLRaw.bundle_e_sqlite3/2.1.10": {
         "type": "package",
         "dependencies": {
@@ -5386,6 +5392,30 @@
         "selenium.webdriver.nuspec"
       ]
     },
+    "Selenium.WebDriver.ChromeDriver/133.0.6943.5300": {
+      "sha512": "GjO/9ZUgq/sgyZt45Qy3nrhrKWjmU71wf3UaSRDqcGvp/vMelkJDN+49lOWeQvBHnVRSw006ohPjW6JlqQOU5w==",
+      "type": "package",
+      "path": "selenium.webdriver.chromedriver/133.0.6943.5300",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "build/DefinePropertiesChromeDriver.targets",
+        "build/Selenium.WebDriver.ChromeDriver.targets",
+        "driver/linux64/LICENSE.chromedriver",
+        "driver/linux64/chromedriver",
+        "driver/mac64/LICENSE.chromedriver",
+        "driver/mac64/chromedriver",
+        "driver/mac64arm/LICENSE.chromedriver",
+        "driver/mac64arm/chromedriver",
+        "driver/win32/LICENSE.chromedriver",
+        "driver/win32/chromedriver.exe",
+        "nupkg-icon.png",
+        "selenium.webdriver.chromedriver.133.0.6943.5300.nupkg.sha512",
+        "selenium.webdriver.chromedriver.nuspec"
+      ]
+    },
     "SQLitePCLRaw.bundle_e_sqlite3/2.1.10": {
       "sha512": "UxWuisvZ3uVcVOLJQv7urM/JiQH+v3TmaJc1BLKl5Dxfm/nTzTUrqswCqg/INiYLi61AXnHo1M1JPmPqqLnAdg==",
       "type": "package",
@@ -7122,6 +7152,7 @@
       "MySql.EntityFrameworkCore >= 9.0.0",
       "Selenium.Support >= 4.28.0",
       "Selenium.WebDriver >= 4.28.0",
+      "Selenium.WebDriver.ChromeDriver >= 133.0.6943.5300",
       "Swashbuckle.AspNetCore >= 7.2.0",
       "dotenv.net >= 3.2.1"
     ]
@@ -7224,6 +7255,10 @@
           "Selenium.WebDriver": {
             "target": "Package",
             "version": "[4.28.0, )"
+          },
+          "Selenium.WebDriver.ChromeDriver": {
+            "target": "Package",
+            "version": "[133.0.6943.5300, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
