@@ -100,7 +100,14 @@ RUN chmod +x /usr/bin/chromium
     
 #Debug
 RUN which chromium
+
+# Copy the selenium-manager directory from the publish folder
+COPY ./publish/selenium-manager /app/selenium-manager
+
+# Verify the files
+RUN ls /app/selenium-manager
 RUN ls /app/selenium-manager/linux
+RUN ls /app/selenium-manager/linux/selenium-manager
 
 # Copy the published .NET app into the container
 COPY --from=build /app/publish .
