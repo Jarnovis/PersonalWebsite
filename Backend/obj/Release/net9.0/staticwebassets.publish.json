@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "fvfg190DFq3ZbVvFPNoxkkF/SXOYCm8XPKh+xWLbHj8=",
-  "Source": "Backend",
-  "BasePath": "_content/Backend",
+  "Hash": "QGVSizwXrTph6AuD6pqykRFG+aXM2jYWKVOutMjEBdE=",
+  "Source": "WebApi",
+  "BasePath": "_content/WebApi",
   "Mode": "Default",
   "ManifestType": "Publish",
   "ReferencedProjectsConfiguration": [],
