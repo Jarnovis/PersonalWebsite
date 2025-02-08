@@ -2,19 +2,19 @@ version: '3.8'
 
 services:
   backend:
-    build:
-      context: .  # Path to the directory containing the Dockerfile
-      dockerfile: Dockerfile
+    build: .
+    container_name: backendwebsite
     ports:
-      - "5072:5072"  # Adjust the port if needed
-    shm_size: 2gb  # Increase shared memory size for Chromium
+      - "5072:5072"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-    volumes:
-      - .:/app  # Mount the current directory to /app in the container (optional)
+      - DB_PATH=/app/LocalDatabase/PersonalWebsite.db
     networks:
-      - backend_network
+      - backend-network
+    volumes:
+      - .:/app
+    restart: unless-stopped
 
 networks:
-  backend_network:
+  backend-network:
     driver: bridge
