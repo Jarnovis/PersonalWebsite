@@ -1,5 +1,5 @@
 using WebApi.Configure;
-//namespace WebApi;
+namespace Backend;
 
 public class Program
 {
