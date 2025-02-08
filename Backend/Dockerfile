@@ -41,7 +41,9 @@ RUN apt-get update \
     wget \
     curl \
     unzip \
+    libgconf-2-4 \
     && apt-get clean
+
 
 
 # Download and install the correct version of Chromedriver
