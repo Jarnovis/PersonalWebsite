@@ -69,7 +69,6 @@ EXPOSE 5072
 
 # Ensure the selenium-manager binary has execute permissions
 RUN ls -R /app/selenium-manager
-RUN chmod +x /app/selenium-manager/linux/selenium-manager
 
 # Verify the path to chromium
 RUN which chromium
