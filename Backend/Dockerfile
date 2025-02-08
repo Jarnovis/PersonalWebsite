@@ -98,6 +98,10 @@ ENV CHROMEDRIVER_BIN=/usr/lib/chromium/chromedriver
 RUN chmod +x /usr/local/bin/chromedriver
 RUN chmod +x /usr/bin/chromium
     
+#Debug
+RUN which chromium
+RUN which chromium-browser
+RUN ls /app/selenium-manager/linux
 
 # Copy the published .NET app into the container
 COPY --from=build /app/publish .
