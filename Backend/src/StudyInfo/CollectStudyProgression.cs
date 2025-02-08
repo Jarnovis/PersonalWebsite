@@ -36,6 +36,7 @@ public class CollectStudyInfoProgression
             catch (InvalidOperationException ex)
             {
                 Console.WriteLine(ex.Message);
+                await LoadProgressionPage();
             }
             catch (Exception ex)
             {
