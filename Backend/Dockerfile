@@ -89,8 +89,14 @@ RUN curl -sS https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedri
     && chmod +x /usr/local/bin/chromedriver \
     && rm chromedriver.zip
 
+# Set environment variables for Selenium to use headless Chromium
+ENV DISPLAY=:99
+ENV CHROME_BIN=/usr/bin/chromium
+ENV CHROMEDRIVER_BIN=/usr/lib/chromium/chromedriver
+
+# Make sure chromedriver and chromium have the correct permissions
 RUN chmod +x /usr/local/bin/chromedriver
-RUN chmod +x /usr/bin/chromium-browser
+RUN chmod +x /usr/bin/chromium
     
 
 # Copy the published .NET app into the container
