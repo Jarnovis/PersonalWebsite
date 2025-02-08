@@ -35,7 +35,6 @@ RUN apt-get update \
     libcups2 \
     libxss1 \
     libappindicator3-1 \
-    libindicator3-7 \
     fonts-liberation \
     libu2f-udev \
     lsb-release \
