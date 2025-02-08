@@ -69,7 +69,7 @@ ENV SELENIUM_CACHE=/app/.cache/selenium
 # Ensure cache directory exists and has correct permissions
 RUN mkdir -p /app/.cache/selenium && chown -R appuser:appgroup /app/.cache
 
-# Ensure compatibility of Chromedriver with Chromium version
+# Ensure compatibility of Chromedriver with Chromium version 133
 RUN LATEST_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_133) \
     && curl -sS https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip -o chromedriver.zip \
     && unzip chromedriver.zip \
