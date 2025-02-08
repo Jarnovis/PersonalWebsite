@@ -51,13 +51,13 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
 # Clean the NuGet cache to avoid potential corrupted caches
-RUN dotnet nuget locals all --clear
+RUN rm -rf /root/.nuget/packages/* && dotnet nuget locals all --clear
 RUN dotnet nuget list source | grep -q 'nuget.org' || dotnet nuget add source https://api.nuget.org/v3/index.json --name nuget.org
 # Copy the .NET solution and restore dependencies
 COPY *.sln ./
 COPY Backend/*.csproj ./Backend/
 # Ensure restore happens before publish
-RUN dotnet restore ./Backend/Backend.csproj
+RUN dotnet restore ./Backend/Backend.csproj --no-cache
 
 # Copy the remaining files and build the application
 COPY ./Backend/. ./Backend/
