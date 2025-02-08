@@ -18,6 +18,8 @@ COPY ./Backend/. ./Backend/
 
 # Publish the application
 RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
+
+# Add a debug step to check if the publish directory is actually there
 RUN ls -R /app/publish
 
 # Stage 2: Runtime stage for the application
