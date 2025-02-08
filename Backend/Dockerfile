@@ -30,9 +30,20 @@ RUN apt-get update \
     chromium-driver \
     libnss3 \
     libgdk-pixbuf2.0-0 \
-    unzip \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libcups2 \
+    libxss1 \
+    libappindicator3-1 \
+    libindicator3-7 \
+    fonts-liberation \
+    libu2f-udev \
+    lsb-release \
+    wget \
     curl \
+    unzip \
     && apt-get clean
+
 
 # Download and install the correct version of Chromedriver
 RUN LATEST_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE) \
