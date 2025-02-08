@@ -89,5 +89,6 @@ RUN /app/selenium-manager/linux/selenium-manager --browser "chrome" --browser-pa
 
 
 
+
 # Command to run the application
 CMD ["dotnet", "Backend.dll"]
