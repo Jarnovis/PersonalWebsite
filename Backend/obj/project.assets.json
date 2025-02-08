@@ -6357,9 +6357,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\codes\\PersonalWebsite\\Backend\\WebApi.csproj",
-      "projectName": "WebApi",
-      "projectPath": "D:\\codes\\PersonalWebsite\\Backend\\WebApi.csproj",
+      "projectUniqueName": "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj",
+      "projectName": "Backend",
+      "projectPath": "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj",
       "packagesPath": "C:\\Users\\jdvis\\.nuget\\packages\\",
       "outputPath": "D:\\codes\\PersonalWebsite\\Backend\\obj\\",
       "projectStyle": "PackageReference",

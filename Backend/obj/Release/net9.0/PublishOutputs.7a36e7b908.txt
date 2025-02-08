@@ -1,4 +1,4 @@
-D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\WebApi.exe
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\Backend.exe
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\publish\web.config
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\publish\Backend.deps.json
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\publish\Backend.runtimeconfig.json
@@ -10,9 +10,9 @@ D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\src\appsettings.json
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\selenium-manager\linux\selenium-manager
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\selenium-manager\macos\selenium-manager
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\selenium-manager\windows\selenium-manager.exe
-D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\WebApi.dll
-D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\WebApi.runtimeconfig.json
-D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\WebApi.pdb
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\Backend.dll
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\Backend.runtimeconfig.json
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\Backend.pdb
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\Azure.Core.dll
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\Azure.Identity.dll
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\BouncyCastle.Cryptography.dll
@@ -96,4 +96,4 @@ D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\runtimes\win-x64\nat
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\runtimes\win-x86\native\e_sqlite3.dll
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
-D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\WebApi.deps.json
+D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\publish\Backend.deps.json

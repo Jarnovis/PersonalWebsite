@@ -51,8 +51,6 @@ D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\Microsoft.SqlServer.Server.d
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\Mono.TextTemplating.dll
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\MySql.Data.dll
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\MySql.EntityFrameworkCore.dll
-D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\MySqlConnector.dll
-D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\Pomelo.EntityFrameworkCore.MySql.dll
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\WebDriver.Support.dll
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\WebDriver.dll
 D:\codes\PersonalWebsite\Backend\bin\Release\net9.0\SQLitePCLRaw.batteries_v2.dll
