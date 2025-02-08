@@ -138,7 +138,7 @@ public class OpenWebsite : IDisposable
         if (System.Environment.OSVersion.Platform == PlatformID.Unix)
         {
             // Ubuntu/Docker (Linux-based system)
-            options.BinaryLocation = "/snap/bin/chromium";
+            options.BinaryLocation = "/usr/bin/chromium-browser";
             options.AddArguments("--headless --disable-gpu --remote-debugging-port=9222");
         }
         else if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
