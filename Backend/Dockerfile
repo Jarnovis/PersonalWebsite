@@ -92,7 +92,7 @@ RUN curl -sS https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedri
 # Set environment variables for Selenium to use headless Chromium
 ENV DISPLAY=:99
 ENV CHROME_BIN=/usr/bin/chromium
-ENV CHROMEDRIVER_BIN=/usr/lib/chromium/chromedriver
+ENV CHROMEDRIVER_BIN=/usr/local/bin/chromedriver
 
 # Make sure chromedriver and chromium have the correct permissions
 RUN chmod +x /usr/local/bin/chromedriver
