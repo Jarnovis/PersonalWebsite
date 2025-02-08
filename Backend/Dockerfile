@@ -23,7 +23,7 @@ RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Install dependencies including Chromium and ChromiumDriver
+# Install dependencies including Chromium, ChromiumDriver, and Xvfb
 RUN apt-get update \
     && apt-get install -y \
        chromium \
@@ -46,6 +46,7 @@ RUN apt-get update \
        libegl1-mesa \
        libgbm1 \
        libxshmfence1 \
+       xvfb \
     && apt-get clean
 
 # Download and install the correct version of Chromedriver
@@ -71,13 +72,18 @@ EXPOSE 5072
 RUN chmod +x /app/selenium-manager/linux/selenium-manager
 RUN chmod +x /usr/local/bin/chromedriver
 
+# Start Xvfb in the background, then run the selenium-manager command
+# We use a script to start Xvfb and then execute the selenium-manager
+RUN echo "#!/bin/bash \n\
+    Xvfb :99 -ac & \n\
+    export DISPLAY=:99 \n\
+    /app/selenium-manager/linux/selenium-manager --browser \"chrome\" --browser-path \"/usr/bin/chromium\" --language-binding csharp --output json" > /app/start-selenium.sh
 
-# Run the selenium-manager command to setup Selenium in headless mode
-RUN /app/selenium-manager/linux/selenium-manager --browser "chrome" --browser-path "/usr/bin/chromium" --language-binding csharp --output json
+RUN chmod +x /app/start-selenium.sh
 
 # Set the user to run the application as a non-root user (appuser)
 RUN addgroup --system appgroup && adduser --system --group appuser
 USER appuser
 
 # Command to run the application
-CMD ["dotnet", "Backend.dll"]
+CMD ["/app/start-selenium.sh"]
