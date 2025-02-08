@@ -19,9 +19,6 @@ COPY ./Backend/. ./Backend/
 # Publish the application
 RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
 
-# Add a debug step to check if the publish directory is actually there
-RUN ls -R /app/publish
-
 # Stage 2: Runtime stage for the application
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
@@ -57,14 +54,11 @@ RUN chmod +x /usr/bin/chromium
 # Debug: Verify chromium installation
 RUN which chromium
 
-# Copy the entire publish directory
-COPY --from=build /app/publish/selenium-manager/linux/selenium-manager /app/selenium-manager
+# Copy the published app from the build stage
+COPY --from=build /app/publish/ /app/
 
-# Verify the selenium-manager files are copied correctly
-RUN ls -R /app/publish
-
-# Copy the published .NET app into the container
-COPY --from=build /app/publish .
+# Debug: Verify if the files were copied correctly
+RUN ls -R /app
 
 # Set up the application user and group (optional but recommended for security)
 RUN addgroup --system appgroup && adduser --system --group appuser
