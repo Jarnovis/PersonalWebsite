@@ -42,10 +42,11 @@ RUN apt-get update \
     libgconf-2-4 \
     && apt-get clean
 
-# Copy the selenium-manager binary from the build stage
-COPY --from=build /app/publish/selenium-manager/linux/selenium-manager /app/selenium-manager/linux/selenium-manager
+# Debug: List contents of the selenium-manager directory
+RUN ls -l /app/selenium-manager/linux/
 
 # Ensure the selenium-manager binary has execute permissions
+COPY --from=build /app/publish/selenium-manager/linux/selenium-manager /app/selenium-manager/linux/selenium-manager
 RUN chmod +x /app/selenium-manager/linux/selenium-manager
 
 # Copy the published app from the build stage
@@ -53,6 +54,10 @@ COPY --from=build /app/publish/ /app/
 
 # Set up the application user and group (optional but recommended for security)
 RUN addgroup --system appgroup && adduser --system --group appuser
+
+# Ensure the application user has ownership of the application directory
+RUN chown -R appuser:appgroup /app
+
 USER appuser
 
 # Expose the ports your application will run on
@@ -60,3 +65,10 @@ EXPOSE 5072
 
 # Command to run the application
 CMD ["dotnet", "Backend.dll"]
+
+# Debug: Ensure the selenium-manager binary exists and is executable
+RUN ls -l /app/selenium-manager/linux/selenium-manager
+RUN chmod +x /app/selenium-manager/linux/selenium-manager
+
+# Verify that the selenium-manager binary is executable
+RUN /app/selenium-manager/linux/selenium-manager --version
