@@ -73,11 +73,18 @@ RUN ls -R /app/selenium-manager
 # Verify the path to chromium
 RUN which chromium
 
+# Switch to root user to change permissions
+USER root
+
 # Ensure selenium-manager has execute permissions
 RUN chmod +x /app/selenium-manager/linux/selenium-manager
 
+# Switch back to appuser or your regular non-root user
+USER appuser
+
 # Run the selenium-manager command
 RUN /app/selenium-manager/linux/selenium-manager --browser "chrome" --browser-path "/usr/bin/chromium" --language-binding csharp --output json
+
 
 
 
