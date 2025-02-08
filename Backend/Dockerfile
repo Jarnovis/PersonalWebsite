@@ -25,30 +25,28 @@ WORKDIR /app
 
 RUN apt-get update \
     && apt-get install -y \
-    chromium \
-    chromium-driver \
-    libnss3 \
-    libgdk-pixbuf2.0-0 \
-    libatk-bridge2.0-0 \
-    libatk1.0-0 \
-    libcups2 \
-    libxss1 \
-    libappindicator3-1 \
-    fonts-liberation \
-    libu2f-udev \
-    lsb-release \
-    wget \
-    curl \
-    unzip \
-    libgconf-2-4 \
-    libgl1-mesa-glx \
-    libegl1-mesa \
-    libxi6 \
-    libxcomposite1 \
-    libxrandr2 \
-    libasound2 \
-    libxtst6 \
+       chromium \
+       chromium-driver \
+       libnss3 \
+       libgdk-pixbuf2.0-0 \
+       libatk-bridge2.0-0 \
+       libatk1.0-0 \
+       libcups2 \
+       libxss1 \
+       libappindicator3-1 \
+       fonts-liberation \
+       libu2f-udev \
+       lsb-release \
+       wget \
+       curl \
+       unzip \
+       libgconf-2-4 \
+       libgl1-mesa-glx \
+       libegl1-mesa \
+       libgbm1 \
+       libxshmfence1 \
     && apt-get clean
+
 
 
 

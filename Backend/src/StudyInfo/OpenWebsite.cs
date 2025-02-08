@@ -139,7 +139,12 @@ public class OpenWebsite : IDisposable
         {
             // Ubuntu/Docker (Linux-based system)
             options.BinaryLocation = "/usr/bin/chromium";
-            options.AddArguments("--headless", "--disable-gpu", "--remote-debugging-port=9222", "--no-sandbox", "--disable-dev-shm-usage", "--log-level=3", "--v=1");
+            options.AddArguments("--headless", 
+                             "--disable-gpu", 
+                             "--no-sandbox", 
+                             "--disable-dev-shm-usage", 
+                             "--remote-debugging-port=9222", 
+                             "--window-size=1920,1080");
         }
         else if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
