@@ -5,7 +5,6 @@ WORKDIR /app
 # Clean the NuGet cache to avoid potential corrupted caches
 RUN rm -rf /root/.nuget/packages/* && dotnet nuget locals all --clear
 RUN dotnet nuget list source | grep -q 'nuget.org' || dotnet nuget add source https://api.nuget.org/v3/index.json --name nuget.org
-
 # Copy the solution and project files
 COPY *.sln ./
 COPY Backend/*.csproj ./Backend/
@@ -18,9 +17,7 @@ COPY ./Backend/. ./Backend/
 
 # Publish the application
 RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
-RUN ls -R /app/publish  # Verify the directory content
-RUN ls -R /app/publish/selenium-manager  # Check for selenium-manager directory
-RUN ls -R /app/publish/selenium-manager/linux  # Check if 'linux' exists
+RUN ls -R /app/publish
 
 # Stage 2: Runtime stage for the application
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
@@ -38,6 +35,7 @@ RUN apt-get update \
     && apt-get clean
 
 # Install Selenium WebDriver if needed
+# (This step may vary depending on how your app interacts with Selenium)
 RUN curl -sS https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip -o chromedriver.zip \
     && unzip chromedriver.zip \
     && mv chromedriver /usr/local/bin/ \
@@ -52,15 +50,19 @@ ENV CHROMEDRIVER_BIN=/usr/local/bin/chromedriver
 # Make sure chromedriver and chromium have the correct permissions
 RUN chmod +x /usr/local/bin/chromedriver
 RUN chmod +x /usr/bin/chromium
-
-# Debugging: Ensure Chromium is available
+    
+#Debug
 RUN which chromium
 
 # Copy the entire publish directory
-COPY --from=build /app/publish /app/publish
+COPY --from=build /app/publish/selenium-manager/linux/selenium-manager /app/selenium-manager
 
-# Debug: Check if the selenium-manager files are in the right place
+# Verify the selenium-manager files are copied correctly
 RUN ls -R /app/publish
+
+
+# Copy the published .NET app into the container
+COPY --from=build /app/publish .
 
 # Set up the application user and group (optional but recommended for security)
 RUN addgroup --system appgroup && adduser --system --group appuser
@@ -71,3 +73,4 @@ EXPOSE 5072
 
 # Command to run the application
 CMD ["dotnet", "Backend.dll"]
+
