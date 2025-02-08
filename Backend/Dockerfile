@@ -66,6 +66,9 @@ COPY ./Backend/. ./Backend/
 # Publish the application
 RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
 
+# Debug: List contents of /app/publish to check if selenium-manager exists
+RUN ls -R /app/publish
+
 # Stage 2: Runtime stage for the application
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
@@ -102,7 +105,7 @@ RUN chmod +x /usr/bin/chromium
 RUN which chromium
 
 # Copy the entire publish directory
-COPY --from=build /app/publish/selenium-manager /app/selenium-manager
+COPY --from=build /app/Backend/bin/Release/net9.0/publish/selenium-manager /app/selenium-manager
 
 # Verify the selenium-manager files are copied correctly
 RUN ls /app/publish/selenium-manager
