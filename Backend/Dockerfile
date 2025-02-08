@@ -69,8 +69,13 @@ ENV SELENIUM_CACHE=/app/.cache/selenium
 # Ensure cache directory exists and has correct permissions
 RUN mkdir -p /app/.cache/selenium && chown -R appuser:appgroup /app/.cache
 
+# Download and install Chrome version 133.0.6943.53
+RUN curl -sS https://storage.googleapis.com/chrome-for-testing-public/133.0.6943.53/linux64/chrome-linux64.zip -o chrome-linux64.zip \
+    && unzip chrome-linux64.zip -d /usr/bin/ \
+    && rm chrome-linux64.zip
+
 # Download and install Chromedriver version 133.0.6943.53
-RUN curl -sS https://storage.googleapis.com/chrome-for-testing-public/133.0.6943.53/linux64/chrome-headless-shell-linux64.zip \
+RUN curl -sS https://chromedriver.storage.googleapis.com/133.0.6943.53/chromedriver_linux64.zip -o chromedriver.zip \
     && unzip chromedriver.zip \
     && mv chromedriver /usr/local/bin/ \
     && chmod +x /usr/local/bin/chromedriver \
