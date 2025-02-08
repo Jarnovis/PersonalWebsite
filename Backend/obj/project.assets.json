@@ -418,7 +418,8 @@
       "Microsoft.CodeAnalysis.NetAnalyzers/9.0.0": {
         "type": "package",
         "build": {
-          "buildTransitive/_._": {}
+          "buildTransitive/Microsoft.CodeAnalysis.NetAnalyzers.props": {},
+          "buildTransitive/Microsoft.CodeAnalysis.NetAnalyzers.targets": {}
         }
       },
       "Microsoft.CodeAnalysis.Workspaces.Common/4.8.0": {
@@ -7180,7 +7181,8 @@
             "version": "[9.0.1, )"
           },
           "Microsoft.CodeAnalysis.NetAnalyzers": {
-            "include": "None",
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
             "target": "Package",
             "version": "[9.0.0, )"
           },
