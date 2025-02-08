@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj": {}
+    "/home/jdv/PersonalWebsite/Backend/Backend.csproj": {}
   },
   "projects": {
-    "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj": {
+    "/home/jdv/PersonalWebsite/Backend/Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj",
+        "projectUniqueName": "/home/jdv/PersonalWebsite/Backend/Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj",
-        "packagesPath": "C:\\Users\\jdvis\\.nuget\\packages\\",
-        "outputPath": "D:\\codes\\PersonalWebsite\\Backend\\obj\\",
+        "projectPath": "/home/jdv/PersonalWebsite/Backend/Backend.csproj",
+        "packagesPath": "/home/jdv/.nuget/packages/",
+        "outputPath": "/home/jdv/PersonalWebsite/Backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jdvis\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/jdv/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -55,6 +55,12 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.1, )"
+            },
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
             },
             "Microsoft.CodeAnalysis.NetAnalyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -122,7 +128,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
