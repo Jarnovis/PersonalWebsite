@@ -53,14 +53,17 @@ WORKDIR /app
 # Clean the NuGet cache to avoid potential corrupted caches
 RUN rm -rf /root/.nuget/packages/* && dotnet nuget locals all --clear
 RUN dotnet nuget list source | grep -q 'nuget.org' || dotnet nuget add source https://api.nuget.org/v3/index.json --name nuget.org
-# Copy the .NET solution and restore dependencies
+# Copy the solution and project files
 COPY *.sln ./
 COPY Backend/*.csproj ./Backend/
-# Ensure restore happens before publish
+
+# Restore dependencies
 RUN dotnet restore ./Backend/Backend.csproj --no-cache
 
-# Copy the remaining files and build the application
+# Copy the rest of the project files
 COPY ./Backend/. ./Backend/
+
+# Publish the application
 RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish --no-restore
 
 # Stage 2: Runtime stage for the application
