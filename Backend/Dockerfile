@@ -62,15 +62,21 @@ RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 ENV DISPLAY=:99
 ENV CHROME_BIN=/usr/bin/chromium
 ENV CHROMEDRIVER_BIN=/usr/local/bin/chromedriver
+
+# Set the correct Selenium cache path
 ENV SELENIUM_CACHE=/app/.cache/selenium
 
-# Download and install the correct version of Chromedriver
-RUN LATEST_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE) \
+# Ensure cache directory exists and has correct permissions
+RUN mkdir -p /app/.cache/selenium && chown -R appuser:appgroup /app/.cache
+
+# Ensure compatibility of Chromedriver with Chromium version
+RUN LATEST_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_133) \
     && curl -sS https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip -o chromedriver.zip \
     && unzip chromedriver.zip \
     && mv chromedriver /usr/local/bin/ \
     && chmod +x /usr/local/bin/chromedriver \
     && rm chromedriver.zip
+
 
 # Copy the published app from the build stage
 COPY --from=build /app/publish/ /app/
