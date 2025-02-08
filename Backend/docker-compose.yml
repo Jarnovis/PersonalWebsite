@@ -1,20 +1,12 @@
-version: '3.8'
-
+version: '3'
 services:
   backend:
-    build: .
-    container_name: backendwebsite
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "5072:5072"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - DB_PATH=/app/LocalDatabase/PersonalWebsite.db
-    networks:
-      - backend-network
     volumes:
       - .:/app
-    restart: unless-stopped
-
-networks:
-  backend-network:
-    driver: bridge

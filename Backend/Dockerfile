@@ -42,11 +42,16 @@ RUN apt-get update \
     libgconf-2-4 \
     && apt-get clean
 
-# Debug: List contents of the selenium-manager directory
+# Debug: List contents of the entire /app folder before copying anything
+RUN ls -l /app
+
+# Copy the selenium-manager binary from the build stage
+COPY --from=build /app/publish/selenium-manager/linux/selenium-manager /app/selenium-manager/linux/selenium-manager
+
+# Debug: List contents of /app after copying the binary
 RUN ls -l /app/selenium-manager/linux/
 
 # Ensure the selenium-manager binary has execute permissions
-COPY --from=build /app/publish/selenium-manager/linux/selenium-manager /app/selenium-manager/linux/selenium-manager
 RUN chmod +x /app/selenium-manager/linux/selenium-manager
 
 # Copy the published app from the build stage
