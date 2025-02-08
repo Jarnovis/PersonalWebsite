@@ -23,30 +23,8 @@ RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Install necessary dependencies for selenium-manager
-RUN apt-get update \
-    && apt-get install -y \
-    libnss3 \
-    libgdk-pixbuf2.0-0 \
-    libatk-bridge2.0-0 \
-    libatk1.0-0 \
-    libcups2 \
-    libxss1 \
-    libappindicator3-1 \
-    fonts-liberation \
-    libu2f-udev \
-    lsb-release \
-    wget \
-    curl \
-    unzip \
-    libgconf-2-4 \
-    && apt-get clean
-
 # Copy the published app from the build stage
 COPY --from=build /app/publish/ /app/
-
-# Debug: Verify if the files were copied correctly
-RUN ls -R /app
 
 # Set up the application user and group (optional but recommended for security)
 RUN addgroup --system appgroup && adduser --system --group appuser
@@ -54,24 +32,6 @@ USER appuser
 
 # Expose the ports your application will run on
 EXPOSE 5072
-
-# Ensure the selenium-manager binary has execute permissions
-RUN ls -R /app/selenium-manager
-
-# Verify the path to selenium-manager
-RUN ls -l /app/selenium-manager/linux/selenium-manager
-
-# Switch to root user to change permissions
-USER root
-
-# Ensure selenium-manager has execute permissions
-RUN chmod +x /app/selenium-manager/linux/selenium-manager
-
-# Switch back to appuser or your regular non-root user
-USER appuser
-
-# Run the selenium-manager command (Optional: You can comment this out if it's not required during build)
-RUN /app/selenium-manager/linux/selenium-manager --browser "chrome" --browser-path "/usr/bin/chromium" --language-binding csharp --output json
 
 # Command to run the application
 CMD ["dotnet", "Backend.dll"]
