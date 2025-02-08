@@ -90,6 +90,11 @@ public class OpenWebsite : IDisposable
 
             return true;
         }
+        catch (WebDriverException ex)
+        {
+            Console.WriteLine(ex.Message);
+            return false;
+        }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);

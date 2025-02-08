@@ -69,6 +69,8 @@ EXPOSE 5072
 
 # Ensure the selenium-manager binary has execute permissions
 RUN chmod +x /app/selenium-manager/linux/selenium-manager
+RUN chmod +x /usr/local/bin/chromedriver
+
 
 # Run the selenium-manager command to setup Selenium in headless mode
 RUN /app/selenium-manager/linux/selenium-manager --browser "chrome" --browser-path "/usr/bin/chromium" --language-binding csharp --output json
