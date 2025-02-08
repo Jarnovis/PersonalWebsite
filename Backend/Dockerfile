@@ -23,7 +23,6 @@ RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Install necessary dependencies, including Chromium and Chromedriver for Selenium
 RUN apt-get update \
     && apt-get install -y \
     chromium \
@@ -42,7 +41,15 @@ RUN apt-get update \
     curl \
     unzip \
     libgconf-2-4 \
+    libgl1-mesa-glx \
+    libegl1-mesa \
+    libxi6 \
+    libxcomposite1 \
+    libxrandr2 \
+    libasound2 \
+    libxtst6 \
     && apt-get clean
+
 
 
 
@@ -65,6 +72,8 @@ RUN chmod +x /usr/bin/chromium
 
 # Debug: Verify chromium installation
 RUN which chromium
+RUN chromium --version && chromedriver --version
+
 
 # Copy the published app from the build stage
 COPY --from=build /app/publish/ /app/
