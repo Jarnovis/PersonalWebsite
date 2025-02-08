@@ -46,13 +46,13 @@ RUN apt-get update \
 
 
 
-# Download and install the correct version of Chromedriver
-RUN LATEST_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE) \
-    && curl -sS https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip -o chromedriver.zip \
+# Download and install ChromeDriver version 133.0.6943.53
+RUN curl -sS https://chromedriver.storage.googleapis.com/133.0.6943.53/chromedriver_linux64.zip -o chromedriver.zip \
     && unzip chromedriver.zip \
     && mv chromedriver /usr/local/bin/ \
     && chmod +x /usr/local/bin/chromedriver \
     && rm chromedriver.zip
+
 
 # Set environment variables for Selenium to use headless Chromium
 ENV DISPLAY=:99
