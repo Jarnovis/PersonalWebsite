@@ -86,10 +86,6 @@
               "target": "Package",
               "version": "[9.0.0, )"
             },
-            "Pomelo.EntityFrameworkCore.MySql": {
-              "target": "Package",
-              "version": "[8.0.2, )"
-            },
             "Selenium.Support": {
               "target": "Package",
               "version": "[4.28.0, )"

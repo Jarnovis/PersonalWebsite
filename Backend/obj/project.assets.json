@@ -1242,39 +1242,6 @@
           }
         }
       },
-      "MySqlConnector/2.3.5": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "7.0.1"
-        },
-        "compile": {
-          "lib/net8.0/MySqlConnector.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/MySqlConnector.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "Pomelo.EntityFrameworkCore.MySql/8.0.2": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "[8.0.2, 8.0.999]",
-          "MySqlConnector": "2.3.5"
-        },
-        "compile": {
-          "lib/net8.0/Pomelo.EntityFrameworkCore.MySql.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/Pomelo.EntityFrameworkCore.MySql.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "Selenium.Support/4.28.0": {
         "type": "package",
         "dependencies": {
@@ -4609,50 +4576,6 @@
         "mysql.entityframeworkcore.nuspec"
       ]
     },
-    "MySqlConnector/2.3.5": {
-      "sha512": "AmEfUPkFl+Ev6jJ8Dhns3CYHBfD12RHzGYWuLt6DfG6/af6YvOMyPz74ZPPjBYQGRJkumD2Z48Kqm8s5DJuhLA==",
-      "type": "package",
-      "path": "mysqlconnector/2.3.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "lib/net462/MySqlConnector.dll",
-        "lib/net462/MySqlConnector.xml",
-        "lib/net471/MySqlConnector.dll",
-        "lib/net471/MySqlConnector.xml",
-        "lib/net48/MySqlConnector.dll",
-        "lib/net48/MySqlConnector.xml",
-        "lib/net6.0/MySqlConnector.dll",
-        "lib/net6.0/MySqlConnector.xml",
-        "lib/net7.0/MySqlConnector.dll",
-        "lib/net7.0/MySqlConnector.xml",
-        "lib/net8.0/MySqlConnector.dll",
-        "lib/net8.0/MySqlConnector.xml",
-        "lib/netstandard2.0/MySqlConnector.dll",
-        "lib/netstandard2.0/MySqlConnector.xml",
-        "lib/netstandard2.1/MySqlConnector.dll",
-        "lib/netstandard2.1/MySqlConnector.xml",
-        "logo.png",
-        "mysqlconnector.2.3.5.nupkg.sha512",
-        "mysqlconnector.nuspec"
-      ]
-    },
-    "Pomelo.EntityFrameworkCore.MySql/8.0.2": {
-      "sha512": "XjnlcxVBLnEMbyEc5cZzgZeDyLvAniACZQ04W1slWN0f4rmfNzl98gEMvHnFH0fMDF06z9MmgGi/Sr7hJ+BVnw==",
-      "type": "package",
-      "path": "pomelo.entityframeworkcore.mysql/8.0.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "icon.png",
-        "lib/net8.0/Pomelo.EntityFrameworkCore.MySql.dll",
-        "lib/net8.0/Pomelo.EntityFrameworkCore.MySql.xml",
-        "pomelo.entityframeworkcore.mysql.8.0.2.nupkg.sha512",
-        "pomelo.entityframeworkcore.mysql.nuspec"
-      ]
-    },
     "Selenium.Support/4.28.0": {
       "sha512": "6S1gZacGGDRitU2kO92AUHQU1JkMdiFK4NAm6fn8+6eZMU8n04MF6skH6oUqkWAv0wyF1rKWD5IBMFiTBm6G5A==",
       "type": "package",
@@ -6422,7 +6345,6 @@
       "Microsoft.EntityFrameworkCore.Sqlite >= 9.0.1",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.1",
       "MySql.EntityFrameworkCore >= 9.0.0",
-      "Pomelo.EntityFrameworkCore.MySql >= 8.0.2",
       "Selenium.Support >= 4.28.0",
       "Selenium.WebDriver >= 4.28.0",
       "Swashbuckle.AspNetCore >= 7.2.0",
@@ -6514,10 +6436,6 @@
             "target": "Package",
             "version": "[9.0.0, )"
           },
-          "Pomelo.EntityFrameworkCore.MySql": {
-            "target": "Package",
-            "version": "[8.0.2, )"
-          },
           "Selenium.Support": {
             "target": "Package",
             "version": "[4.28.0, )"
@@ -6559,16 +6477,6 @@
     }
   },
   "logs": [
-    {
-      "code": "NU1608",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: Pomelo.EntityFrameworkCore.MySql 8.0.2 requires Microsoft.EntityFrameworkCore.Relational (>= 8.0.2 && <= 8.0.999) but version Microsoft.EntityFrameworkCore.Relational 9.0.1 was resolved.",
-      "libraryId": "Microsoft.EntityFrameworkCore.Relational",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    },
     {
       "code": "NU1701",
       "level": "Warning",

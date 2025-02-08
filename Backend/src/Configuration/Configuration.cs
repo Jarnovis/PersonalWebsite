@@ -42,12 +42,14 @@ public class Configuration
                 options.SwaggerEndpoint("/swagger/v0.1/swagger.json", "Personal Website");
             });
         }
+        else
+        {
+            SendStartupMail();
+        }
 
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();
-        
-        SendStartupMail();
 
         app.Run();
     }
