@@ -109,7 +109,7 @@ public class OpenWebsite : IDisposable
     {
         ChromeOptions options = new ChromeOptions();
 
-        options.AddArguments("--headless", "--disable-gpu", "--no-sandbox");
+        options.AddArguments("--headless", "--disable-gpu", "--no-sandbox", "--remote-debuggin-port=9222, --disable-dev-shm-usage");
 
         if (System.Environment.OSVersion.Platform == PlatformID.Unix)
         {
