@@ -40,7 +40,14 @@ RUN apt-get update \
     curl \
     unzip \
     libgconf-2-4 \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxrandr2 \
+    libxi6 \
+    libxtst6 \
+    libgl1-mesa-glx \
     && apt-get clean
+
 
 # Debug: List contents of the entire /app folder before copying anything
 RUN ls -l /app
