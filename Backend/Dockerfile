@@ -23,64 +23,26 @@ RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Install necessary dependencies
-RUN apt-get update \
-    && apt-get install -y \
-    libnss3 \
-    libgdk-pixbuf2.0-0 \
-    libatk-bridge2.0-0 \
-    libatk1.0-0 \
-    libcups2 \
-    libxss1 \
-    libappindicator3-1 \
-    fonts-liberation \
-    libu2f-udev \
-    lsb-release \
-    wget \
-    curl \
-    unzip \
-    libgconf-2-4 \
-    libx11-xcb1 \
-    libxcomposite1 \
-    libxrandr2 \
-    libxi6 \
-    libxtst6 \
-    libgl1-mesa-glx \
-    && apt-get clean
+# Install necessary tools (unzip, curl, etc.)
+RUN apt-get update -y
+RUN apt-get install -y unzip curl gnupg2
 
+# Install Chrome and ChromeDriver dependencies
+RUN apt-get install -y fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 \
+    libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libdrm2 libgbm1 libglib2.0-0 \
+    libgtk-3-0 libnspr4 libnss3 libpango-1.0-0 libu2f-udev libvulkan1 \
+    libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 \
+    libxkbcommon0 libxrandr2 xdg-utils
 
-# Debug: List contents of the entire /app folder before copying anything
-RUN ls -l /app
+# Install Chrome
+RUN curl -L -o /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN dpkg -i /tmp/chrome.deb
+RUN apt-get install -f -y
+RUN rm /tmp/chrome.deb
 
-# Copy the selenium-manager binary from the build stage
-COPY --from=build /app/publish/selenium-manager/linux/selenium-manager /app/selenium-manager/linux/selenium-manager
-
-# Debug: List contents of /app after copying the binary
-RUN ls -l /app/selenium-manager/linux/
-
-# Ensure the selenium-manager binary has execute permissions
-RUN chmod +x /app/selenium-manager/linux/selenium-manager
-
-# Copy the published app from the build stage
-COPY --from=build /app/publish/ /app/
-
-# Set up the application user and group (optional but recommended for security)
-RUN addgroup --system appgroup && adduser --system --group appuser
-
-# Ensure the application user has ownership of the application directory
-RUN chown -R appuser:appgroup /app
-
-USER appuser
-
-# Expose the ports your application will run on
-EXPOSE 5072
+# Install ChromeDriver
+RUN curl -L -o /tmp/chromedriver.zip https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5847.0/win64/chrome-win64.zip
+RUN unzip /tmp/chromedriver.zip -d /usr/local/bin/
 
 # Command to run the application
 CMD ["dotnet", "Backend.dll"]
-
-# Debug: Ensure the selenium-manager binary exists and is executable
-RUN ls -l /app/selenium-manager/linux/selenium-manager
-RUN chmod +x /app/selenium-manager/linux/selenium-manager
-
-# Verify that the selenium-manager binary is executable
-RUN /app/selenium-manager/linux/selenium-manager --version
