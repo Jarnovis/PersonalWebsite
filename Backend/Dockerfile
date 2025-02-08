@@ -73,8 +73,12 @@ RUN ls -R /app/selenium-manager
 # Verify the path to chromium
 RUN which chromium
 
-# Run the selenium-manager command with the correct path
+# Ensure selenium-manager has execute permissions
+RUN chmod +x /app/selenium-manager/linux/selenium-manager
+
+# Run the selenium-manager command
 RUN /app/selenium-manager/linux/selenium-manager --browser "chrome" --browser-path "/usr/bin/chromium" --language-binding csharp --output json
+
 
 
 # Command to run the application
