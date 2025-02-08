@@ -49,11 +49,10 @@ RUN apt-get update \
 # Download and install ChromeDriver version 133.0.6943.53
 RUN curl -sS https://storage.googleapis.com/chrome-for-testing-public/133.0.6943.53/linux64/chrome-linux64.zip -o chromedriver.zip \
     && unzip chromedriver.zip \
+    && ls -l chrome-linux64 \
     && mv chrome-linux64/chromedriver /usr/local/bin/ \
     && chmod +x /usr/local/bin/chromedriver \
     && rm -rf chromedriver.zip chrome-linux64
-
-
 
 # Set environment variables for Selenium to use headless Chromium
 ENV DISPLAY=:99
