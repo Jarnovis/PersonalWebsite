@@ -23,7 +23,7 @@ RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Install dependencies including Chromium, ChromiumDriver, and Xvfb
+# Install dependencies including Chromium, ChromiumDriver, Xvfb, and other libraries
 RUN apt-get update \
     && apt-get install -y \
        chromium \
@@ -49,6 +49,18 @@ RUN apt-get update \
        xvfb \
     && apt-get clean
 
+# Fix permissions for cache folder
+RUN mkdir -p /app/.cache/selenium && chown -R appuser:appgroup /app/.cache
+
+# Fix permissions for Xvfb
+RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
+
+# Set environment variables for Selenium to use headless Chromium
+ENV DISPLAY=:99
+ENV CHROME_BIN=/usr/bin/chromium
+ENV CHROMEDRIVER_BIN=/usr/local/bin/chromedriver
+ENV SELENIUM_CACHE=/app/.cache/selenium
+
 # Download and install the correct version of Chromedriver
 RUN LATEST_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE) \
     && curl -sS https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip -o chromedriver.zip \
@@ -56,11 +68,6 @@ RUN LATEST_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST
     && mv chromedriver /usr/local/bin/ \
     && chmod +x /usr/local/bin/chromedriver \
     && rm chromedriver.zip
-
-# Set environment variables for Selenium to use headless Chromium
-ENV DISPLAY=:99
-ENV CHROME_BIN=/usr/bin/chromium
-ENV CHROMEDRIVER_BIN=/usr/local/bin/chromedriver
 
 # Copy the published app from the build stage
 COPY --from=build /app/publish/ /app/
@@ -73,7 +80,6 @@ RUN chmod +x /app/selenium-manager/linux/selenium-manager
 RUN chmod +x /usr/local/bin/chromedriver
 
 # Start Xvfb in the background, then run the selenium-manager command
-# We use a script to start Xvfb and then execute the selenium-manager
 RUN echo "#!/bin/bash \n\
     Xvfb :99 -ac & \n\
     export DISPLAY=:99 \n\
