@@ -47,7 +47,6 @@
 #ENTRYPOINT ["dotnet", "Backend.dll"]
 
 # Stage 1: Build stage for .NET application
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
@@ -59,8 +58,6 @@ COPY *.sln ./
 COPY Backend/*.csproj ./Backend/
 # Ensure restore happens before publish
 RUN dotnet restore ./Backend/Backend.csproj
-RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish --no-restore
-
 
 # Copy the remaining files and build the application
 COPY ./Backend/. ./Backend/
