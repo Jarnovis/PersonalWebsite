@@ -23,81 +23,84 @@ RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Install dependencies including Chromium, ChromiumDriver, Xvfb, and other libraries
+# Install necessary dependencies, including Chromium and Chromedriver for Selenium
 RUN apt-get update \
     && apt-get install -y \
-       chromium \
-       chromium-driver \
-       libnss3 \
-       libgdk-pixbuf2.0-0 \
-       libatk-bridge2.0-0 \
-       libatk1.0-0 \
-       libcups2 \
-       libxss1 \
-       libappindicator3-1 \
-       fonts-liberation \
-       libu2f-udev \
-       lsb-release \
-       wget \
-       curl \
-       unzip \
-       libgconf-2-4 \
-       libgl1-mesa-glx \
-       libegl1-mesa \
-       libgbm1 \
-       libxshmfence1 \
-       xvfb \
+    chromium \
+    chromium-driver \
+    libnss3 \
+    libgdk-pixbuf2.0-0 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libcups2 \
+    libxss1 \
+    libappindicator3-1 \
+    fonts-liberation \
+    libu2f-udev \
+    lsb-release \
+    wget \
+    curl \
+    unzip \
+    libgconf-2-4 \
     && apt-get clean
 
-# Create appuser and appgroup before using chown
-RUN addgroup --system appgroup && adduser --system --group appuser
 
-# Fix permissions for cache folder
-RUN mkdir -p /app/.cache/selenium && chown -R appuser:appgroup /app/.cache
 
-# Fix permissions for Xvfb
-RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
+# Download and install the correct version of Chromedriver
+RUN LATEST_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE) \
+    && curl -sS https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip -o chromedriver.zip \
+    && unzip chromedriver.zip \
+    && mv chromedriver /usr/local/bin/ \
+    && chmod +x /usr/local/bin/chromedriver \
+    && rm chromedriver.zip
 
 # Set environment variables for Selenium to use headless Chromium
 ENV DISPLAY=:99
 ENV CHROME_BIN=/usr/bin/chromium
 ENV CHROMEDRIVER_BIN=/usr/local/bin/chromedriver
 
-# Set the correct Selenium cache path
-ENV SELENIUM_CACHE=/app/.cache/selenium
+# Make sure chromedriver and chromium have the correct permissions
+RUN chmod +x /usr/local/bin/chromedriver
+RUN chmod +x /usr/bin/chromium
 
-# Ensure cache directory exists and has correct permissions
-RUN mkdir -p /app/.cache/selenium && chown -R appuser:appgroup /app/.cache
-
-# Download and install Chromedriver version 133.0.6943.53
-RUN curl -sS curl -sS https://chromedriver.storage.googleapis.com/133.0.6943.53/chromedriver_linux64.zip -o chromedriver.zip \
-    && unzip chromedriver.zip \
-    && mv chromedriver /usr/local/bin/ \
-    && chmod +x /usr/local/bin/chromedriver \
-    && rm chromedriver.zip
-
-
+# Debug: Verify chromium installation
+RUN which chromium
 
 # Copy the published app from the build stage
 COPY --from=build /app/publish/ /app/
 
-# Expose the port your application will run on
+# Debug: Verify if the files were copied correctly
+RUN ls -R /app
+
+# Set up the application user and group (optional but recommended for security)
+RUN addgroup --system appgroup && adduser --system --group appuser
+USER appuser
+
+# Expose the ports your application will run on
 EXPOSE 5072
 
 # Ensure the selenium-manager binary has execute permissions
+RUN ls -R /app/selenium-manager
+
+# Verify the path to chromium
+RUN which chromium
+
+# Switch to root user to change permissions
+USER root
+
+# Ensure selenium-manager has execute permissions
 RUN chmod +x /app/selenium-manager/linux/selenium-manager
-RUN chmod +x /usr/local/bin/chromedriver
+RUN ls -l /app/selenium-manager/linux/selenium-manager
 
-# Start Xvfb in the background, then run the selenium-manager command
-RUN echo "#!/bin/bash \n\
-    Xvfb :99 -ac & \n\
-    export DISPLAY=:99 \n\
-    /app/selenium-manager/linux/selenium-manager --browser \"chrome\" --browser-path \"/usr/bin/chromium\" --language-binding csharp --output json" > /app/start-selenium.sh
-
-RUN chmod +x /app/start-selenium.sh
-
-# Set the user to run the application as a non-root user (appuser)
+# Switch back to appuser or your regular non-root user
 USER appuser
 
+# Run the selenium-manager command
+RUN /app/selenium-manager/linux/selenium-manager --browser "chrome" --browser-path "/usr/bin/chromium" --language-binding csharp --output json
+
+
+
+
+
 # Command to run the application
-CMD ["/app/start-selenium.sh"]
+CMD ["dotnet", "Backend.dll"]
