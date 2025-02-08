@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/jdv/PersonalWebsite/Backend/Backend.csproj": {}
+    "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "/home/jdv/PersonalWebsite/Backend/Backend.csproj": {
+    "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/jdv/PersonalWebsite/Backend/Backend.csproj",
+        "projectUniqueName": "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "/home/jdv/PersonalWebsite/Backend/Backend.csproj",
-        "packagesPath": "/home/jdv/.nuget/packages/",
-        "outputPath": "/home/jdv/PersonalWebsite/Backend/obj/",
+        "projectPath": "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj",
+        "packagesPath": "C:\\Users\\jdvis\\.nuget\\packages\\",
+        "outputPath": "D:\\codes\\PersonalWebsite\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/jdv/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\jdvis\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -128,7 +128,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

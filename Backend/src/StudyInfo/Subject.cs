@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using OpenQA.Selenium.DevTools.V130.Page;
 
 namespace WebApi.StudyInfo;
 
