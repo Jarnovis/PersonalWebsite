@@ -52,8 +52,7 @@ WORKDIR /app
 
 # Clean the NuGet cache to avoid potential corrupted caches
 RUN dotnet nuget locals all --clear
-RUN dotnet nuget add source https://api.nuget.org/v3/index.json --name nuget.org
-
+RUN dotnet nuget list source | grep -q 'nuget.org' || dotnet nuget add source https://api.nuget.org/v3/index.json --name nuget.org
 # Copy the .NET solution and restore dependencies
 COPY *.sln ./
 COPY Backend/*.csproj ./Backend/
