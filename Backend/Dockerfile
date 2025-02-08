@@ -64,7 +64,7 @@ RUN dotnet restore ./Backend/Backend.csproj --no-cache
 COPY ./Backend/. ./Backend/
 
 # Publish the application
-RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
+RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publis
 
 # Stage 2: Runtime stage for the application
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
@@ -74,6 +74,7 @@ WORKDIR /app
 RUN apt-get update \
     && apt-get install -y \
     chromium \
+    chromium-browser \
     chromium-driver \
     libnss3 \
     libgdk-pixbuf2.0-0 \
@@ -88,6 +89,10 @@ RUN curl -sS https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedri
     && mv chromedriver /usr/local/bin/ \
     && chmod +x /usr/local/bin/chromedriver \
     && rm chromedriver.zip
+
+RUN chmod +x /usr/local/bin/chromedriver
+RUN chmod +x /usr/bin/chromium-browser
+    
 
 # Copy the published .NET app into the container
 COPY --from=build /app/publish .
