@@ -5,6 +5,7 @@ WORKDIR /app
 # Clean the NuGet cache to avoid potential corrupted caches
 RUN rm -rf /root/.nuget/packages/* && dotnet nuget locals all --clear
 RUN dotnet nuget list source | grep -q 'nuget.org' || dotnet nuget add source https://api.nuget.org/v3/index.json --name nuget.org
+
 # Copy the solution and project files
 COPY *.sln ./
 COPY Backend/*.csproj ./Backend/
@@ -17,7 +18,6 @@ COPY ./Backend/. ./Backend/
 
 # Publish the application
 RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
-RUN ls -R /app/publish
 
 # Stage 2: Runtime stage for the application
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
@@ -34,9 +34,9 @@ RUN apt-get update \
     curl \
     && apt-get clean
 
-# Install Selenium WebDriver if needed
-# (This step may vary depending on how your app interacts with Selenium)
-RUN curl -sS https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip -o chromedriver.zip \
+# Download and install the correct version of Chromedriver
+RUN LATEST_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE) \
+    && curl -sS https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip -o chromedriver.zip \
     && unzip chromedriver.zip \
     && mv chromedriver /usr/local/bin/ \
     && chmod +x /usr/local/bin/chromedriver \
@@ -44,25 +44,22 @@ RUN curl -sS https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedri
 
 # Set environment variables for Selenium to use headless Chromium
 ENV DISPLAY=:99
-ENV CHROME_BIN=/usr/bin/chromium
-ENV CHROMEDRIVER_BIN=/usr/local/bin/chromedriver
+ENV CHROME_BIN=/usr/bin/chromium  # Ensure Chromium binary path is correct
+ENV CHROMEDRIVER_BIN=/usr/local/bin/chromedriver  # Ensure Chromedriver path is correct
 
 # Make sure chromedriver and chromium have the correct permissions
 RUN chmod +x /usr/local/bin/chromedriver
 RUN chmod +x /usr/bin/chromium
-    
-#Debug
+
+# Debug: Verify chromium installation
 RUN which chromium
+RUN ls -l /usr/bin/chromium  # Check the permissions and path for chromium
 
-# Copy the entire publish directory
-COPY --from=build /app/publish/selenium-manager/linux/selenium-manager /app/selenium-manager
+# Copy the published app from the build stage
+COPY --from=build /app/publish/ /app/
 
-# Verify the selenium-manager files are copied correctly
-RUN ls -R /app/publish
-
-
-# Copy the published .NET app into the container
-COPY --from=build /app/publish .
+# Debug: Verify if the files were copied correctly
+RUN ls -R /app
 
 # Set up the application user and group (optional but recommended for security)
 RUN addgroup --system appgroup && adduser --system --group appuser
@@ -71,6 +68,22 @@ USER appuser
 # Expose the ports your application will run on
 EXPOSE 5072
 
+# Ensure the selenium-manager binary has execute permissions
+RUN ls -R /app/selenium-manager
+RUN ls -l /app/selenium-manager/linux/selenium-manager  # Debug the selenium-manager binary location
+
+# Switch to root user to change permissions
+USER root
+
+# Ensure selenium-manager has execute permissions
+RUN chmod +x /app/selenium-manager/linux/selenium-manager
+RUN ls -l /app/selenium-manager/linux/selenium-manager  # Confirm execution permission
+
+# Switch back to appuser or your regular non-root user
+USER appuser
+
+# Run the selenium-manager command
+RUN /app/selenium-manager/linux/selenium-manager --browser "chrome" --browser-path "/usr/bin/chromium" --language-binding csharp --output json
+
 # Command to run the application
 CMD ["dotnet", "Backend.dll"]
-
