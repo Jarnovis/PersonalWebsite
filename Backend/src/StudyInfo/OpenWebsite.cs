@@ -135,12 +135,11 @@ public class OpenWebsite : IDisposable
     {
         ChromeOptions options = new ChromeOptions();
 
-        options.AddArguments("--headless", "--disable-gpu", "--no-sandbox", "--remote-debugging-port=9222", "--disable-dev-shm-usage");
-
         if (System.Environment.OSVersion.Platform == PlatformID.Unix)
         {
             // Ubuntu/Docker (Linux-based system)
-            options.BinaryLocation = "/usr/bin/chromium";
+            options.BinaryLocation = "/snap/bin/chromium";
+            options.AddArguments("--headless --disable-gpu --remote-debugging-port=9222");
         }
         else if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
@@ -149,6 +148,7 @@ public class OpenWebsite : IDisposable
             if (File.Exists(path))
             {
                 options.BinaryLocation = path;
+                options.AddArguments("--headless", "--disable-gpu", "--no-sandbox", "--remote-debugging-port=9222", "--disable-dev-shm-usage");
             }
             else
             {
