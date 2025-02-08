@@ -67,5 +67,16 @@ USER appuser
 # Expose the ports your application will run on
 EXPOSE 5072
 
+# Ensure the selenium-manager binary has execute permissions
+RUN ls -R /app/selenium-manager
+RUN chmod +x /app/selenium-manager/linux/selenium-manager
+
+# Verify the path to chromium
+RUN which chromium
+
+# Run the selenium-manager command with the correct path
+RUN /app/selenium-manager/linux/selenium-manager --browser "chrome" --browser-path "/usr/bin/chromium" --language-binding csharp --output json
+
+
 # Command to run the application
 CMD ["dotnet", "Backend.dll"]
