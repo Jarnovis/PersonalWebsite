@@ -151,7 +151,6 @@ public class OpenWebsite : IDisposable
                 options.AddArguments("--headless", 
                              "--disable-gpu", 
                              "--no-sandbox", 
-                             "--disable-dev-shm-usage", 
                              "--remote-debugging-port=9222", 
                              "--window-size=1920,1080");
             }

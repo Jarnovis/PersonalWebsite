@@ -33,7 +33,7 @@ public class StudyProgressionBackgroundSerice : BackgroundService
                 Console.WriteLine($"Error in CollectStudyInfoProgression: {ex.Message}");
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(20), stoppingToken);
+            await Task.Delay(TimeSpan.FromHours(1), stoppingToken);
         }
     }
 }
