@@ -57,5 +57,4 @@ RUN apt-get install -y fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-
  && apt-get purge --auto-remove -y curl \
  && rm -rf /var/lib/apt/lists/*
 
-# Command to run the application
-CMD ["dotnet", "Backend.dll"]
+ENTRYPOINT [ "dotnet", "Backend.ddl" ]
