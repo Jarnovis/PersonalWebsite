@@ -34,11 +34,28 @@ RUN apt-get install -y fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-
     libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 \
     libxkbcommon0 libxrandr2 xdg-utils
 
-# Install Chrome
-RUN curl -L -o /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN dpkg -i /tmp/chrome.deb
-RUN apt-get install -f -y
-RUN rm /tmp/chrome.deb
+ # Install Chrome
+ RUN apt-get update && apt-get install -y \
+ apt-transport-https \
+ ca-certificates \
+ curl \
+ gnupg \
+ hicolor-icon-theme \
+ libcanberra-gtk* \
+ libgl1-mesa-dri \
+ libgl1-mesa-glx \
+ libpango1.0-0 \
+ libpulse0 \
+ libv4l-0 \
+ fonts-symbola \
+ --no-install-recommends \
+ && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
+ && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list \
+ && apt-get update && apt-get install -y \
+ google-chrome-stable \
+ --no-install-recommends \
+ && apt-get purge --auto-remove -y curl \
+ && rm -rf /var/lib/apt/lists/*
 
 # Install ChromeDriver
 RUN curl -L -o /tmp/chromedriver.zip https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5847.0/win64/chrome-win64.zip
