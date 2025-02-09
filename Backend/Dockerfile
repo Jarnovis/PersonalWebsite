@@ -76,5 +76,6 @@ RUN apt-get update && apt-get install -y wget curl unzip \
 
 
  
-# Set the entry point to run the .NET application
-ENTRYPOINT [ "dotnet", "Backend.dll" ]
+# Apply database migrations when the container starts
+CMD dotnet ef database update --no-build && \
+    dotnet Backend.dll
