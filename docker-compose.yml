@@ -16,6 +16,7 @@ services:
       - SMTP_EMAIL=${SMTP_EMAIL}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - PERSONAL_EMAIL=${PERSONAL_EMAIL}
+      - ASPNETCORE_ENVIRONMENT=Production
     image: backendwebsite
     container_name: backendwebsite
     ports:
@@ -24,6 +25,9 @@ services:
       #- frontend  # Ensures frontend is ready before backend starts (optional, for linked services)
     networks:
       - website_network
+    volumes:
+      - .:/app
+      - ./LocalDatabase:/app/LocalDatabase
 
   #frontend:
     #build:
