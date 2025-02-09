@@ -1,0 +1,122 @@
+/* Shared item styles for both grids */
+.gridItem {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    width: 100%; /* Ensures items take up full available width */
+    box-sizing: border-box;
+    margin: 20px auto;
+    margin-bottom: 5px; /* Space between items */
+}
+
+.gridItem p strong {
+    color: #007BFF;  /* Blue color for strong text */
+}
+
+/* Add this for centering the grid on the screen */
+.degreeGridWrapper {
+    display: flex;
+    justify-content: center;  /* Centers horizontally */
+    align-items: flex-start;  /* Align to the top */
+    height: calc(100vh - 60px); /* Take up full height minus the height of the header (adjust 60px based on your header size) */
+    width: 100vw;             /* Full viewport width */
+    padding-top: 20px;        /* Add space between the header and the grid */
+}
+
+/* Degree grid styles */
+.degreeGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Adjust columns as needed */
+    gap: 50px; /* Space between degree items */
+}
+
+/* Degree item styles */
+.degreeItem {
+    /* Shared styles for degree items */
+    padding: 20px;
+    background-color: rgb(126, 162, 173);
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 20px auto;
+}
+
+.degreeItem h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.degreeItem .circleContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Subject grid styles */
+.subjectGrid {
+    display: flex;
+    flex-direction: column; /* Stack the subjects vertically */
+    align-items: flex-start; /* Align the subject items to the left */
+    margin-top: 15px; /* Space between degree name and subjects */
+}
+
+/* Subject item styles */
+.subjectItem {
+    /* Applying the shared styles */
+    /* This now uses the gridItem class styles for consistency */
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 20px auto;
+    margin-bottom: 5px;
+}
+
+.subjectItem:hover {
+    background-color: #dcdcdc;  /* Change background on hover for better visibility */
+}
+
+/* Subject Card Wrapper */
+.subjectCard {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;  /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);  /* Soft shadow */
+    max-width: 100%;  /* Maximum width */
+    margin: 20px auto; /* Center card with margin */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;  /* Animation for hover effect */
+}
+
+.subjectCard:hover {
+    transform: translateY(-5px);  /* Lift the card slightly on hover */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);  /* Enhance shadow on hover */
+}
+
+/* Title Style */
+.subjectCard h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Paragraph Style */
+.subjectCard p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 8px 0;  /* Vertical space between each paragraph */
+}
+
+/* Strong text */
+.subjectCard p strong {
+    color: #007BFF;  /* Blue color for labels */
+}
+
+/* Add a border at the bottom for separation */
+.subjectCard p:last-child {
+    margin-bottom: 0; /* Remove margin from last paragraph */
+}

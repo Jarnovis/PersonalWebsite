@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Backend/Dockerfile
+    environment:
+      - DB_IP=${DB_IP}
+      - DB_SHAREFOLDER=${DB_SHAREFOLDER}
+      - DB_DATABASE=${DB_DATABASE}
+      - STUDENT_EMAIL=${STUDENT_EMAIL}
+      - STUDENT_PASSWORD=${STUDENT_PASSWORD}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_EMAIL=${SMTP_EMAIL}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - PERSONAL_EMAIL=${PERSONAL_EMAIL}
+      - ASPNETCORE_ENVIRONMENT=Production
+    image: backendwebsite
+    container_name: backendwebsite
+    ports:
+      - "5000:80"  # Map backend port to host machine (assuming backend uses port 80 in Dockerfile)
+    #depends_on:
+      #- frontend  # Ensures frontend is ready before backend starts (optional, for linked services)
+    networks:
+      - website_network
+    volumes:
+      - ./Backend/LocalDatabase:/app/LocalDatabase
+
+  #frontend:
+    #build:
+      #context: ./Frontend
+      #dockerfile: Dockerfile
+    #image: frontendwebsite
+    #container_name: frontendwebsite
+    #ports:
+      #- "3000:80"  # Map frontend port to host machine
+    #networks:
+      #- website_network
+    #depends_on:
+      #- backend  # Ensure backend is up and running before frontend starts (optional)
+      
+networks:
+  website_network:
+    driver: bridge
