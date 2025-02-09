@@ -27,8 +27,8 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 # Install necessary tools (unzip, curl, etc.)
-RUN apt-get update -y \
-    && apt-get install -y unzip curl gnupg2 wget
+RUN apt-get update -y
+RUN apt-get install -y unzip curl gnupg2
 
 # Install Chrome and ChromeDriver dependencies
 RUN apt-get install -y fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 \
@@ -74,6 +74,7 @@ RUN apt-get update && apt-get install -y wget curl unzip \
 && wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
 && dpkg -i google-chrome-stable_current_amd64.deb || apt-get -fy install
 
-# Apply database migrations when the container starts
-CMD dotnet ef database update --no-build && \
-    dotnet Backend.dll
+
+ 
+# Set the entry point to run the .NET application
+ENTRYPOINT [ "dotnet", "Backend.dll" ]
