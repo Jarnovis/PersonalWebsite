@@ -23,25 +23,17 @@ RUN dotnet publish ./Backend/Backend.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Install .NET SDK to allow running migrations
-RUN apt-get update -y \
-    && apt-get install -y wget \
-    && wget https://download.visualstudio.microsoft.com/download/pr/9f56d86b-df93-4789-97e6-6638b3bc2be6/478396a351fcfa051317cd5ae86d8fd6/dotnet-sdk-9.0.0-linux-x64.tar.gz \
-    && mkdir -p /usr/share/dotnet \
-    && tar zxf dotnet-sdk-9.0.0-linux-x64.tar.gz -C /usr/share/dotnet \
-    && rm dotnet-sdk-9.0.0-linux-x64.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
-
 # Copy the published application from the build stage
 COPY --from=build /app/publish .
 
 # Install necessary tools (unzip, curl, etc.)
-RUN apt-get install -y unzip curl gnupg2
+RUN apt-get update -y \
+    && apt-get install -y unzip curl gnupg2 wget
 
 # Install Chrome and ChromeDriver dependencies
 RUN apt-get install -y fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 \
     libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libdrm2 libgbm1 libglib2.0-0 \
-    libgtk-3-0 libnspr4 libnss3 libpango1.0-0 libu2f-udev libvulkan1 \
+    libgtk-3-0 libnspr4 libnss3 libpango-1.0-0 libu2f-udev libvulkan1 \
     libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 \
     libxkbcommon0 libxrandr2 xdg-utils
 
@@ -82,8 +74,6 @@ RUN apt-get update && apt-get install -y wget curl unzip \
 && wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
 && dpkg -i google-chrome-stable_current_amd64.deb || apt-get -fy install
 
-
- 
 # Apply database migrations when the container starts
 CMD dotnet ef database update --no-build && \
     dotnet Backend.dll
