@@ -96,6 +96,13 @@ public class SelectFromDatabase : IDisposable
         return rowData;
     }
 
+    public IList<T> SelectWholeTable<T>(T table, DatabaseContext dbContext) where T : class
+    {
+        IList<T> data = DynamicDatabaseTool.SelectWholeTable<T>(table, dbContext);
+
+        return data;
+    }
+
     public void Dispose()
     {
         Dispose(true);

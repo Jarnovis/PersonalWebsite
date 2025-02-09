@@ -56,6 +56,7 @@ public class Configuration
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();
+        app.UseCors("AllowSpecificOrgigins");
 
         app.Run();
     }
@@ -120,10 +121,10 @@ public class Configuration
         builder.Services.AddCors(options => 
         {
             options.AddPolicy("AllowSpecificOrgigins", policy => 
-            policy.WithOrigins("")
+            policy.WithOrigins("http://localhost:5173")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowAnyOrigin());
+                .AllowCredentials());
         });
 
         AddDefaultSerivesForBuilder(builder);

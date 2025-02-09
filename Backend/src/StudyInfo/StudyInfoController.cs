@@ -14,6 +14,22 @@ public class StudyInfoController : ControllerBase
         _dbContext = databaseContext ?? throw new ArgumentNullException(nameof(databaseContext));
     }
 
+    [HttpGet("GetAllDegrees")]
+    public async Task<IActionResult> GetAllDegrees()
+    {
+        using (SelectFromDatabase select = new SelectFromDatabase(_dbContext))
+        {
+            IList<Degree> degrees = select.SelectWholeTable<Degree>(new Degree(), _dbContext);
+
+            if (degrees.Count > 0)
+            {
+                return StatusCode(200, new { degrees });
+            }
+
+            return StatusCode(404, new { message = "No degrees were found." });
+        }
+    }
+
     [HttpGet("GetDegreeInfo")]
     public async Task<IActionResult> GetDegreeInfo(string degreeName)
     {

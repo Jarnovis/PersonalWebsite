@@ -46,6 +46,11 @@ public class DynamicDatabaseTool
         return existingItems;
     }
 
+    public static List<T> SelectWholeTable<T>(T table, DatabaseContext dbContext) where T : class
+    {
+        return dbContext.Set<T>().ToList();
+    }
+
     public static T AddOrUpdate<T>(T data, string columnName, object columnValue, DatabaseContext dbContext) where T : class
     {
         var existingItem = SelectExistingRow<T>(columnName, columnValue, dbContext);
