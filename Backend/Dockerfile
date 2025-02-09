@@ -57,9 +57,5 @@ RUN apt-get install -y fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-
  && apt-get purge --auto-remove -y curl \
  && rm -rf /var/lib/apt/lists/*
 
-# Install ChromeDriver
-RUN curl -L -o /tmp/chromedriver.zip https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5847.0/win64/chrome-win64.zip
-RUN unzip /tmp/chromedriver.zip -d /usr/local/bin/
-
 # Command to run the application
 CMD ["dotnet", "Backend.dll"]
