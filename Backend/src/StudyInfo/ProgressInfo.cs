@@ -87,7 +87,7 @@ public class ProgressInfo
 
     private async Task CalculateNewPoints(Degree degree, int totalPoints, Dictionary<string, int> subjectsWithPoints)
     {
-        if (degree.CurrentPoints < totalPoints && degree.CurrentPoints != 0)
+        if (degree.CurrentPoints < totalPoints)
         {
             using (EnvConfig env = new EnvConfig())
             using (EmailService emailService = new EmailService(new EnvConfig()))
