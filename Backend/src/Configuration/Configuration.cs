@@ -14,7 +14,13 @@ public class Configuration
         {
             EnvConfig envConfig = serviceProvider.GetRequiredService<EnvConfig>();
             //string connectionString = @$"Data source=\\{envConfig.Get("DB_IP")}\{envConfig.Get("DB_SHAREDFOLDER")}\{envConfig.Get("DB_DATABASE")}";
-            string dbPath = Path.Combine(Directory.GetCurrentDirectory(), @"LocalDatabase\PersonalWebsite.db");
+
+            
+            
+            string dbPath = System.Environment.OSVersion.Platform == PlatformID.Win32NT ? 
+            Path.Combine(Directory.GetCurrentDirectory(), @"LocalDatabase\PersonalWebsite.db")
+            :
+            Path.Combine(Directory.GetCurrentDirectory(), @"LocalDatabase/PersonalWebsite.db");
             Console.WriteLine("Resolved DB Path: " + dbPath);
 
             string connectionString = $@"Data source={dbPath}";
