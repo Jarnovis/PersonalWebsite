@@ -60,5 +60,16 @@ RUN apt-get update && apt-get install -y \
     && apt-get purge --auto-remove -y curl \
     && rm -rf /var/lib/apt/lists/*
 
+RUN chmod +x /app/selenium-manager/linux/selenium-manager
+
+RUN apt-get update && apt-get install -y \
+    xvfb \
+    libxi6 \
+    libgconf-2-4 \
+    libxkbcommon-x11-0 \
+    libxshmfence1 \
+    && rm -rf /var/lib/apt/lists/*
+
+ 
 # Set the entry point to run the .NET application
 ENTRYPOINT [ "dotnet", "Backend.dll" ]
