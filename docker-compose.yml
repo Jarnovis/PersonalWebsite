@@ -26,8 +26,8 @@ services:
     networks:
       - website_network
     volumes:
-      - .:/app
-      - ./LocalDatabase:/app/LocalDatabase
+      - ./Backend:/app
+      - ./Backend/LocalDatabase:/app/LocalDatabase
 
   #frontend:
     #build:
