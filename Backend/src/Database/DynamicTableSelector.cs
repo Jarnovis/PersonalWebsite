@@ -13,6 +13,17 @@ public class DynamicDatabaseTool
     {
         var parameter = Expression.Parameter(typeof(T), "x");
         var property = Expression.Property(parameter, columnName);
+        if (columnValue != null && columnValue.GetType() != property.Type)
+        {
+            try
+            {
+                columnValue = Convert.ChangeType(columnValue, property.Type);
+            }
+            catch (InvalidCastException)
+            {
+                throw new ArgumentException($"Cannot convert {columnValue.GetType()} to {property.Type}");
+            }
+        }
         var constant = Expression.Constant(columnValue, property.Type);
         var equality = Expression.Equal(property, constant);
         var predicate = Expression.Lambda<Func<T, bool>>(equality, parameter);

@@ -22,7 +22,7 @@ public class StudyInfoController : ControllerBase
 
         if (degree != null)
         {
-            var subjects = DynamicDatabaseTool.SelectExistingRow<Subject>("Degree", degree, _dbContext);
+            var subjects = DynamicDatabaseTool.SelectExistingRows<Subject>("Degree", degree, _dbContext);
             return StatusCode(200, new { degree, subjects });
         }
         
