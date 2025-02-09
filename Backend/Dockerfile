@@ -70,6 +70,11 @@ RUN apt-get update && apt-get install -y \
     libxshmfence1 \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y wget curl unzip \
+&& wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+&& dpkg -i google-chrome-stable_current_amd64.deb || apt-get -fy install
+
+
  
 # Set the entry point to run the .NET application
 ENTRYPOINT [ "dotnet", "Backend.dll" ]

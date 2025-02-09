@@ -148,13 +148,17 @@ public class OpenWebsite : IDisposable
             if (File.Exists(path))
             {
                 options.BinaryLocation = path;
-                options.AddArguments("--headless",
-                                 "--disable-gpu",
-                                 "--no-sandbox",
-                                 "--disable-dev-shm-usage",
-                                 "--remote-debugging-port=9222",
-                                 "--remote-allow-origins=*",
-                                 "--window-size=1920,1080");
+                options.AddArguments(
+                    "--headless",
+                    "--disable-gpu",
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--remote-debugging-port=9222",
+                    "--remote-allow-origins=*",
+                    "--disable-background-networking",
+                    "--disable-extensions"
+                );
+
             }
             else
             {
@@ -168,12 +172,17 @@ public class OpenWebsite : IDisposable
             if (File.Exists(path))
             {
                 options.BinaryLocation = path;
-                options.AddArguments("--headless",
-                                 "--disable-gpu",
-                                 "--no-sandbox",
-                                 "--disable-dev-shm-usage",
-                                 "--remote-debugging-port=9222",
-                                 "--remote-allow-origins=*");
+                options.AddArguments(
+                    "--headless",
+                    "--disable-gpu",
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--remote-debugging-port=9222",
+                    "--remote-allow-origins=*",
+                    "--disable-background-networking",
+                    "--disable-extensions"
+                );
+
             }
             else
             {
