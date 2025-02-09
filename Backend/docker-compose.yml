@@ -10,3 +10,4 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     volumes:
       - .:/app
+      - ./LocalDatabase:/app/LocalDatabase
