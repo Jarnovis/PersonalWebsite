@@ -143,7 +143,8 @@ public class OpenWebsite : IDisposable
         if (System.Environment.OSVersion.Platform == PlatformID.Unix)
         {
             // Ubuntu/Docker (Linux-based system)
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "selenium-manager", "linux", "selenium-manager");
+            //string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "selenium-manager", "linux", "selenium-manager");
+            string path = "/usr/bin/google-chrome";
             if (File.Exists(path))
             {
                 options.BinaryLocation = path;
