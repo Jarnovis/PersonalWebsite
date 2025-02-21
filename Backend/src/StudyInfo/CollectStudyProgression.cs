@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using System.Web;
 using HtmlAgilityPack;
 using Mysqlx;
 using WebApi.Database;
@@ -56,8 +57,7 @@ public class CollectStudyInfoProgression
         {
             foreach (var node in foundedNodes)
             {
-                string content = node.InnerText.Trim();
-
+                string content = HttpUtility.HtmlDecode(node.InnerText).Trim(); // Decodes HTML entities
                 data.Add(content);
             }
         }
@@ -75,8 +75,7 @@ public class CollectStudyInfoProgression
         {
             foreach (var node in foundedNodes)
             {
-                string content = node.InnerText.Trim();
-
+                string content = HttpUtility.HtmlDecode(node.InnerText).Trim(); // Decodes HTML entities
                 data.Add(content);
             }
         }

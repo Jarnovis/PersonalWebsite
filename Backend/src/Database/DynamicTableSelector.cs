@@ -33,10 +33,11 @@ public class DynamicDatabaseTool
     public static T SelectExistingRow<T>(string columnName, object columnValue, DatabaseContext dbContext) where T : class
     {
         var predicate = CreatePredicate<T>(columnName, columnValue);
-        var existingItem = dbContext.Set<T>().FirstOrDefault(predicate);
+        var existingItem = dbContext.Set<T>().FirstOrDefault(predicate) ?? throw new Exception($"No record found in {typeof(T).Name} where {columnName} = {columnValue}");
 
         return existingItem;
     }
+
 
     public static List<T> SelectExistingRows<T>(string identityColumn, object identityValue, DatabaseContext dbContext) where T : class
     {
@@ -53,23 +54,27 @@ public class DynamicDatabaseTool
 
     public static T AddOrUpdate<T>(T data, string columnName, object columnValue, DatabaseContext dbContext) where T : class
     {
-        var existingItem = SelectExistingRow<T>(columnName, columnValue, dbContext);
+        try
+        {
+            var existingItem = SelectExistingRow<T>(columnName, columnValue, dbContext);
 
-        if (existingItem == null)
+            if (existingItem == null)
+            {
+                dbContext.Set<T>().Add(data);
+                dbContext.SaveChanges();
+                
+                return data;
+            }
+
+            UpdateValue(data, existingItem, dbContext);
+            return existingItem;
+        }
+        catch (Exception ex)
         {
             dbContext.Set<T>().Add(data);
             dbContext.SaveChanges();
             
             return data;
-        }
-        else
-        {
-            if (data.GetType() == new Degree().GetType())
-            {
-                Console.WriteLine("Degree");
-            }
-            UpdateValue(data, existingItem, dbContext);
-            return existingItem;
         }
     }
 

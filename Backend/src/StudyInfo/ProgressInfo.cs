@@ -1,4 +1,5 @@
 using System.Text;
+using OpenQA.Selenium;
 using WebApi.Database;
 using WebApi.Enviroment;
 using WebApi.Services.EmailServices;
@@ -24,7 +25,21 @@ public class ProgressInfo
 
     public Degree RegistrateDegree(string degreeName)
     {
-        Degree degreeForPoints = DynamicDatabaseTool.SelectExistingRow<Degree>("Name", degreeName, _dbContext);
+        Degree degreeForPoints = new Degree();
+        try
+        {
+            degreeForPoints = DynamicDatabaseTool.SelectExistingRow<Degree>("Name", degreeName, _dbContext);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            degreeForPoints = new Degree()
+            {
+                CurrentPoints = 0,
+                TotalPoints = 0
+            };
+        }
+
         Degree degree = new Degree()
         {
             Name = degreeName,
@@ -61,16 +76,16 @@ public class ProgressInfo
         foreach (Subject subject in subjects)
         {
             Console.WriteLine(subject.CourseName);
-            Subject temp = DynamicDatabaseTool.SelectExistingRow<Subject>("CourseName", subject.CourseName, _dbContext);
-
-            if (temp != null)
+            try
             {
+                Subject temp = DynamicDatabaseTool.SelectExistingRow<Subject>("CourseName", subject.CourseName, _dbContext);
+
                 if (subject.Points > temp.Points)
                 {
                     subjectsWithPoints[subject.CourseName] = subject.Points;
                 }
             }
-            else
+            catch (Exception ex)
             {
                 subjectsWithPoints[subject.CourseName] = subject.Points;
             }
@@ -93,7 +108,7 @@ public class ProgressInfo
             using (EmailService emailService = new EmailService(new EnvConfig()))
             {
                 degree.CurrentPoints = totalPoints;
-                Console.WriteLine($"Points: {degree.CurrentPoints}, {totalPoints}");
+
                 if (degree.CurrentPoints == totalPoints)
                 {
                     await emailService.Send(env.Get("PERSONAL_EMAIL"), $"Updated Study Points {degree.Name}", CreatePointsUpdateEmail(degree, totalPoints, subjectsWithPoints));
