@@ -3,6 +3,8 @@ import { pull } from '../utils/fetcher'
 import ProgressionCircle from '../study/ProgressionCircle';
 import SubjectCard from '../study/SubjectCard';
 import './StudyProgression.css';
+import Footer from '../general/footer/footer';
+import Header from '../general/header/header'
 
 const BACKEND_URL = import.meta.env.APP_BACKEND_URL ?? 'http://localhost:5072';
 
@@ -122,14 +124,16 @@ function StudyProgression()
     }
 
     return <>
-        <h1 className="centerh1">Studie Progressie</h1>
+        <Header></Header>
+        <div className='studyProgressionContainer'>
+            <div className='main-content'>
+                <h1 className="centerh1">Studie Progressie</h1>
 
-        {loading ? (
-            <p>Loading...</p>
-        ) : (
-            renderDegrees()  
-            )
-        }
+                {loading ? <p>Loading...</p>: renderDegrees()}
+            </div>
+        </div>
+
+        <Footer/>
     </>
 }
 

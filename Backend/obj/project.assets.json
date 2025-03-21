@@ -7163,11 +7163,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj",
+      "projectUniqueName": "D:\\codes\\Personal\\Portfolio_Website\\PersonalWebsite\\Backend\\Backend.csproj",
       "projectName": "Backend",
-      "projectPath": "D:\\codes\\PersonalWebsite\\Backend\\Backend.csproj",
+      "projectPath": "D:\\codes\\Personal\\Portfolio_Website\\PersonalWebsite\\Backend\\Backend.csproj",
       "packagesPath": "C:\\Users\\jdvis\\.nuget\\packages\\",
-      "outputPath": "D:\\codes\\PersonalWebsite\\Backend\\obj\\",
+      "outputPath": "D:\\codes\\Personal\\Portfolio_Website\\PersonalWebsite\\Backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jdvis\\AppData\\Roaming\\NuGet\\NuGet.Config"

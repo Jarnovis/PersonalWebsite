@@ -1,0 +1,37 @@
+#body-footer {
+    background: linear-gradient(141deg, rgb(37, 37, 37) 5%, rgb(29, 29, 29) 45%, rgb(0, 0, 0) 95%);
+    color: white;
+    height: 75px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0; 
+    margin-top: auto;
+    clear: both;
+    margin-bottom: 0px;
+    
+}
+
+#items {
+    display: flex;
+    gap: 20px;
+}
+
+#items img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+#logos {
+    display: flex;
+    gap: 20px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    object-fit: contain;
+}

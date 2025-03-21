@@ -1,7 +1,34 @@
-body {
- background-color: #EEE5E9;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(141deg, rgb(59, 59, 59) 5%, rgb(29, 29, 29) 45%, rgb(0, 0, 0) 95%);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+
+#initials-header {
+  font-family: 'Kanit', sans-serif;
 }
 
 .centerh1 {
   text-align: center;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding-top: 75px; 
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1 {
+  font-family: 'Kanit', sans-serif;
 }

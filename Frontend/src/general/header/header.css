@@ -1,0 +1,79 @@
+#body-header {
+    background: linear-gradient(141deg, rgb(0, 247, 255) 5%, rgb(229, 255, 0) 45%, rgb(255, 0, 191) 95%);
+    color: rgb(0, 0, 0);
+    height: 75px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+#body-header.hide {
+    transform: translateY(-100%);
+}
+
+#body-header.show {
+    transform: translateY(0);
+}
+
+#initials-header {
+    /*Font-Family in index.css*/
+    font-size: 32px
+}
+@media (max-width: 400px) {
+    #left {
+        padding-left: 20px;
+    }
+}
+
+@media (min-width: 401px) {
+    #left {
+        padding-left: 40px
+    }
+}
+
+@media (min-width: 801px) {
+    #left {
+        padding-left: 80px
+    }
+    
+    #logo {
+        height: 100px;
+        width: px;
+    }
+}
+
+#language-selector {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+#language-selector:hover #language-content{
+    display: block;
+}
+
+#language-button {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+#language-content {
+    display: none;
+    grid-row: 1;
+    position: absolute;
+    bottom: 50px;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
